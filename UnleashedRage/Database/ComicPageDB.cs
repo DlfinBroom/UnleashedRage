@@ -56,10 +56,10 @@ namespace UnleashedRage.Database
         /// <returns>
         /// Returns the page if it is found, returns null otherwise
         /// </returns>
-        public static ComicPage GetOnePage(URContext context, int Volume, int Issue) {
+        public static ComicPage GetOnePage(URContext context, int pageID) {
             try {
                 ComicPage page = (from c in context.ComicPage
-                                  where c.Volume == Volume && c.Issue == Issue
+                                  where c.PageID == pageID
                                   select c).Single();
                 return page;
             }

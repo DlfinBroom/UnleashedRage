@@ -18,13 +18,11 @@ namespace UnleashedRage.Database
             _context = context;
         }
 
-        // GET: Pages
         public async Task<IActionResult> Index()
         {
             return View(await _context.ComicPage.ToListAsync());
         }
 
-        // GET: Pages/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -42,29 +40,27 @@ namespace UnleashedRage.Database
             return View(comicPage);
         }
 
-        // GET: Pages/Create
-        public IActionResult Create()
-        {
+        #region Create
+        [HttpGet]
+        public IActionResult Create() {
             return View();
         }
-
-        // POST: Pages/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PageID,Volume,Issue,Image,ReleaseDate")] ComicPage comicPage)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(comicPage);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(comicPage);
-        }
+        public IActionResult Create([Bind("PageID,Volume,Issue,Image,ReleaseDate")] ComicPage page) {
+            if (ModelState.IsValid) {
+                if (ComicPageDB.AddPage(_context, page) == true)
+                    ViewData["Massage"] = page.ToString() + " was added!";
+                else
+                    ViewData["Mesage"] = "An error occured, try again later";
 
-        // GET: Pages/Edit/5
+                return View();
+            }
+            return View(page);
+        }
+        #endregion
+
+        #region Edit
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -79,10 +75,6 @@ namespace UnleashedRage.Database
             }
             return View(comicPage);
         }
-
-        // POST: Pages/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("PageID,Volume,Issue,Image,ReleaseDate")] ComicPage comicPage)
@@ -114,8 +106,9 @@ namespace UnleashedRage.Database
             }
             return View(comicPage);
         }
+        #endregion
 
-        // GET: Pages/Delete/5
+        #region Delete
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -132,8 +125,6 @@ namespace UnleashedRage.Database
 
             return View(comicPage);
         }
-
-        // POST: Pages/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -143,6 +134,7 @@ namespace UnleashedRage.Database
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        #endregion
 
         private bool ComicPageExists(int id)
         {
