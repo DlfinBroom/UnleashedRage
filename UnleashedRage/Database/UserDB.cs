@@ -71,6 +71,9 @@ namespace UnleashedRage.Database
             catch {
                 return null;
             }
+            finally {
+                context.Dispose();
+            }
         }
     }
 }
