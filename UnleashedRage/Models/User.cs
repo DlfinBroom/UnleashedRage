@@ -8,6 +8,7 @@ namespace UnleashedRage.Models
 {
     public class User
     {
+        
         [Key]
         public int UserID { get; set; }
 
@@ -21,5 +22,18 @@ namespace UnleashedRage.Models
         public string Email { get; set; }
 
         public string CurrPage { get; set; }
+
+        public User() {
+            Username = "User";
+            Password = "12345";
+            Email = "Email@email.com";
+            CurrPage = "";
+        }
+        public User(string name) {
+            Username = name;
+            Password = "12345";
+            Email = "Email@email.com";
+            CurrPage = "";
+        }
     }
 }

@@ -9,6 +9,10 @@ namespace UnleashedRage.Database
 {
     public class URContext : DbContext
     {
+        public URContext()
+        {
+        }
+
         public URContext(DbContextOptions<URContext> options)
             : base(options)
         {
