@@ -48,6 +48,7 @@ namespace UnleashedRage.Database
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("PageID,Volume,Issue,Image,ReleaseDate")] ComicPage page) {
+            page.ReleaseDate = DateTime.Today;
             if (ModelState.IsValid) {
                 if (ComicPageDB.AddPage(_context, page) == true)
                     ViewData["Massage"] = page.ToString() + " was added!";
