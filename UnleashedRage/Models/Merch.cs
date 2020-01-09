@@ -11,6 +11,9 @@ namespace UnleashedRage.Models
         [Key]
         public int MerchID { get; set; }
 
+        [MinLength(3), MaxLength(32)]
+        public string Name { get; set; }
+
         [DataType(DataType.Currency)]
         public int Price { get; set; }
 
