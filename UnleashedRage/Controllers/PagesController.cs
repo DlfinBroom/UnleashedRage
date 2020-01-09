@@ -49,6 +49,7 @@ namespace UnleashedRage.Database
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("PageID,Volume,Issue,Image,ReleaseDate")] ComicPage page) {
             page.ReleaseDate = DateTime.Today;
+            page.Image = new byte[1]; // Have Image become file from the create page
             if (ModelState.IsValid) {
                 if (ComicPageDB.AddPage(_context, page) == true)
                     ViewData["Massage"] = page.ToString() + " was added!";
