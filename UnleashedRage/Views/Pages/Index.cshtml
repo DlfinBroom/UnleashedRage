@@ -13,16 +13,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Volume)
+                Page Number
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Issue)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Image)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReleaseDate)
+                Date Released
             </th>
             <th></th>
         </tr>
@@ -31,20 +25,14 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Volume)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Issue)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Image)
+                Volume @Html.DisplayFor(modelItem => item.Volume), Issue @Html.DisplayFor(modelItem => item.Issue)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ReleaseDate)
             </td>
             <td>
+                <a asp-action="Details" asp-route-id="@item.PageID">View Page</a> |
                 <a asp-action="Edit" asp-route-id="@item.PageID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.PageID">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.PageID">Delete</a>
             </td>
         </tr>
