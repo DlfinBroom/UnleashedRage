@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -49,7 +50,9 @@ namespace UnleashedRage.Database
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("PageID,Volume,Issue,Image,ReleaseDate")] ComicPage page) {
             page.ReleaseDate = DateTime.Today;
-            page.Image = new byte[1]; // Have Image become file from the create page
+
+            page.Image = (byte[])ViewBag.ImgFile;
+            
             if (ModelState.IsValid) {
                 if (ComicPageDB.AddPage(_context, page) == true)
                     ViewData["Massage"] = page.ToString() + " was added!";

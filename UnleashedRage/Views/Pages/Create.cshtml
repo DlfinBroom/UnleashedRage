@@ -13,7 +13,8 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group ">
-                <input id="file" name="file" type="file" class="form-control" />
+                <input type="file" id="ImgFile" class="form-control" 
+                       value="@(ViewBag.ImgFile)"/>
             </div>
             <div class="form-group">
                 <label asp-for="Volume" class="control-label"></label>
