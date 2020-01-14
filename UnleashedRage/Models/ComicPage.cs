@@ -17,5 +17,10 @@ namespace UnleashedRage.Models
 
         [DataType(DataType.Date)]
         public DateTime ReleaseDate { get; set; }
+
+        public string ToString()
+        {
+            return "Volume " + Volume + ", Issue " + Issue;
+        }
     }
 }

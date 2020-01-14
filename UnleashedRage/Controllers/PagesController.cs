@@ -48,21 +48,22 @@ namespace UnleashedRage.Database
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("PageID,Volume,Issue,Image,ReleaseDate")] InputComicPage input) {
-            ComicPage page = new ComicPage();
-            page.Issue = input.Issue;
-            page.Volume = input.Volume;
-            page.Image = new byte[1]; // input.Image;
-            page.ReleaseDate = DateTime.Today;
+        public IActionResult Create([Bind("Volume,Issue,Image")] InputComicPage inputComicPage) {
             if (ModelState.IsValid) {
+                ComicPage page = new ComicPage();
+                page.Issue = inputComicPage.Issue;
+                page.Volume = inputComicPage.Volume;
+                page.Image = System.IO.File.ReadAllBytes(inputComicPage.Image.Name);
+                page.ReleaseDate = DateTime.Today;
                 if (ComicPageDB.AddPage(_context, page) == true)
-                    ViewData["Massage"] = page.ToString() + " was added!";
+                    ViewData["Message"] = page.ToString() + " was added!";
                 else
-                    ViewData["Mesage"] = "An error occured, try again later";
+                    ViewData["ErrorMessage"] = "An error occured, try again later";
 
                 return View();
             }
-            return View(page);
+            ViewData["ErrorMessage"] = "An error occured, try again later";
+            return View();
         }
         #endregion
 
