@@ -48,11 +48,12 @@ namespace UnleashedRage.Database
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("PageID,Volume,Issue,Image,ReleaseDate")] ComicPage page) {
+        public IActionResult Create([Bind("PageID,Volume,Issue,Image,ReleaseDate")] InputComicPage input) {
+            ComicPage page = new ComicPage();
+            page.Issue = input.Issue;
+            page.Volume = input.Volume;
+            page.Image = new byte[1]; // input.Image;
             page.ReleaseDate = DateTime.Today;
-
-            page.Image = (byte[])ViewBag.ImgFile;
-            
             if (ModelState.IsValid) {
                 if (ComicPageDB.AddPage(_context, page) == true)
                     ViewData["Massage"] = page.ToString() + " was added!";
