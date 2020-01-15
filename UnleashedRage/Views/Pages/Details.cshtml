@@ -4,35 +4,16 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-
 <div>
-    <h4>ComicPage</h4>
+    <h1 class="text-lg-center text-primary" >Volume @Html.DisplayFor(model => model.Volume), Issue @Html.DisplayFor(model => model.Issue)</h1>
+    <h2 class="text-md-center text-secondary" >Released on @Html.DisplayFor(model => model.ReleaseDate)</h2>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Volume)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Volume)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Issue)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Issue)
-        </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Image)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Image)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ReleaseDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ReleaseDate)
         </dd>
     </dl>
 </div>

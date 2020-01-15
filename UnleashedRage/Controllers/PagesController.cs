@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -7,33 +8,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using UnleashedRage.Models;
 
-namespace UnleashedRage.Database
-{
-    public class PagesController : Controller
-    {
+namespace UnleashedRage.Database {
+    public class PagesController : Controller {
         private readonly URContext _context;
 
-        public PagesController(URContext context)
-        {
+        public PagesController(URContext context) {
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
-        {
+        public async Task<IActionResult> Index() {
             return View(await _context.ComicPage.ToListAsync());
         }
 
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
+            if (id == null) {
                 return NotFound();
             }
 
             var comicPage = await _context.ComicPage
                 .FirstOrDefaultAsync(m => m.PageID == id);
-            if (comicPage == null)
-            {
+            if (comicPage == null) {
                 return NotFound();
             }
 
@@ -47,31 +42,34 @@ namespace UnleashedRage.Database
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("PageID,Volume,Issue,Image,ReleaseDate")] ComicPage page) {
-            page.ReleaseDate = DateTime.Today;
+        public IActionResult Create([Bind("Volume,Issue,Image")] InputComicPage inputComicPage) {
             if (ModelState.IsValid) {
+                ComicPage page = new ComicPage();
+                page.Issue = inputComicPage.Issue;
+                page.Volume = inputComicPage.Volume;
+                page.Image = System.IO.File.ReadAllBytes(inputComicPage.Image.Name);
+                page.ReleaseDate = DateTime.Today;
                 if (ComicPageDB.AddPage(_context, page) == true)
-                    ViewData["Massage"] = page.ToString() + " was added!";
+                    ViewData["Message"] = page.ToString() + " was added!";
                 else
-                    ViewData["Mesage"] = "An error occured, try again later";
+                    ViewData["ErrorMessage"] = "An error occured, try again later";
 
                 return View();
             }
-            return View(page);
+            ViewData["ErrorMessage"] = "An error occured, try again later";
+            return View();
         }
         #endregion
 
         #region Edit
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
+            if (id == null) {
                 return NotFound();
             }
 
             var comicPage = await _context.ComicPage.FindAsync(id);
-            if (comicPage == null)
-            {
+            if (comicPage == null) {
                 return NotFound();
             }
             return View(comicPage);
@@ -80,26 +78,20 @@ namespace UnleashedRage.Database
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("PageID,Volume,Issue,Image,ReleaseDate")] ComicPage comicPage)
         {
-            if (id != comicPage.PageID)
-            {
+            if (id != comicPage.PageID) {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
+            if (ModelState.IsValid) {
+                try {
                     _context.Update(comicPage);
                     await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ComicPageExists(comicPage.PageID))
-                    {
+                catch (DbUpdateConcurrencyException) {
+                    if (!ComicPageExists(comicPage.PageID)) {
                         return NotFound();
                     }
-                    else
-                    {
+                    else {
                         throw;
                     }
                 }
@@ -110,17 +102,14 @@ namespace UnleashedRage.Database
         #endregion
 
         #region Delete
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
+        public async Task<IActionResult> Delete(int? id) {
+            if (id == null) {
                 return NotFound();
             }
 
             var comicPage = await _context.ComicPage
                 .FirstOrDefaultAsync(m => m.PageID == id);
-            if (comicPage == null)
-            {
+            if (comicPage == null) {
                 return NotFound();
             }
 
@@ -128,8 +117,7 @@ namespace UnleashedRage.Database
         }
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
+        public async Task<IActionResult> DeleteConfirmed(int id) {
             var comicPage = await _context.ComicPage.FindAsync(id);
             _context.ComicPage.Remove(comicPage);
             await _context.SaveChangesAsync();
@@ -137,8 +125,7 @@ namespace UnleashedRage.Database
         }
         #endregion
 
-        private bool ComicPageExists(int id)
-        {
+        private bool ComicPageExists(int id) {
             return _context.ComicPage.Any(e => e.PageID == id);
         }
     }

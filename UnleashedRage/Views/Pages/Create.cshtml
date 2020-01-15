@@ -1,41 +1,49 @@
-﻿@model UnleashedRage.Models.ComicPage
+﻿@model UnleashedRage.Models.InputComicPage
 
 @{
     ViewData["Title"] = "Create";
 }
 
 <h1>Create</h1>
-
-<h4>ComicPage</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Volume" class="control-label"></label>
-                <input asp-for="Volume" class="form-control" />
-                <span asp-validation-for="Volume" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Issue" class="control-label"></label>
-                <input asp-for="Issue" class="form-control" />
-                <span asp-validation-for="Issue" class="text-danger"></span>
-            </div>
-            <div class="form-group ">
-                
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@if (ViewData["Message"] != null)
+{
+    <h4 class="text-success">@ViewData["Message"]</h4>
 }
+@if (ViewData["ErrorMessage"] != null)
+{
+    <h4 class="text-danger">@ViewData["Message"]</h4>
+}
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Image" class="control-label"></label>
+                    <input asp-for="Image" class="form-control" />
+                    <span asp-validation-for="Image" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Volume" class="control-label"></label>
+                    <input asp-for="Volume" class="form-control" />
+                    <span asp-validation-for="Volume" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Issue" class="control-label"></label>
+                    <input asp-for="Issue" class="form-control" />
+                    <span asp-validation-for="Issue" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
