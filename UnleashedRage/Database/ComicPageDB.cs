@@ -50,6 +50,25 @@ namespace UnleashedRage.Database
                 return false;
         }
 
+        public static ComicPage GetLatestPage(URContext context)
+        {
+            try
+            {
+                ComicPage page = (from c in context.ComicPage
+                                  orderby c.ReleaseDate
+                                  select c).Single();
+                return page;
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                context.Dispose();
+            }
+        }
+
         /// <summary>
         /// Returns one comic page with the same volume and issue given
         /// </summary>
