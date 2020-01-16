@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -48,7 +49,19 @@ namespace UnleashedRage.Controllers {
                 Merch merch = new Merch();
                 merch.Name = input.Name;
                 merch.Price = input.Price;
-                merch.MerchImage = System.IO.File.ReadAllBytes(input.MerchImage.Name);
+
+                if (input.MerchImage.ContentType.ToLower() != "image/jpg" &&
+                    input.MerchImage.ContentType.ToLower() != "image/png")
+                {
+                    // add error message here
+                    throw new Exception(); 
+                }
+
+                var ms = new MemoryStream();
+                input.MerchImage.OpenReadStream().CopyTo(ms);
+                byte[] imageByteArray = ms.ToArray();
+
+                merch.MerchImage = imageByteArray;
                 if (MerchDB.AddMerch(_context, merch) == true)
                     ViewData["Message"] = merch.ToString() + " was added!";
                 else

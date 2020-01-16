@@ -42,12 +42,24 @@ namespace UnleashedRage.Database {
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Volume,Issue,Image")] InputComicPage inputComicPage) {
+        public IActionResult Create([Bind("Volume,Issue,Image")] InputComicPage input) {
             if (ModelState.IsValid) {
                 ComicPage page = new ComicPage();
-                page.Issue = inputComicPage.Issue;
-                page.Volume = inputComicPage.Volume;
-                page.Image = System.IO.File.ReadAllBytes(inputComicPage.Image.Name);
+                page.Issue = input.Issue;
+                page.Volume = input.Volume;
+
+                if (input.Image.ContentType.ToLower() != "image/jpg" &&
+                    input.Image.ContentType.ToLower() != "image/png")
+                {
+                    // add error message here
+                    throw new Exception();
+                }
+
+                var ms = new MemoryStream();
+                input.Image.OpenReadStream().CopyTo(ms);
+                byte[] imageByteArray = ms.ToArray();
+
+                page.Image = imageByteArray;
                 page.ReleaseDate = DateTime.Today;
                 if (ComicPageDB.AddPage(_context, page) == true)
                     ViewData["Message"] = page.ToString() + " was added!";
