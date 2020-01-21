@@ -43,27 +43,51 @@ namespace UnleashedRage.Controllers
             return View(user);
         }
 
-        // GET: Users/Create
+        #region Sign Up
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Users/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("UserID,Username,Password,Email,CurrPage")] User user)
         {
+            user.CurrPage = "0; 0";
             if (ModelState.IsValid)
             {
                 _context.Add(user);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                ViewBag.Welcome = "Welcome " + user.Username;
+                return RedirectToAction("Index", "Home");
             }
             return View(user);
         }
+        #endregion
+
+        #region Log In
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(User user)
+        {
+            if (user.Username != null && user.Password != null)
+            {
+                bool? rightUser = UserDB.CheckUser(_context, user);
+                if(rightUser == true)
+                {
+                    ViewBag.Welcome = "Welcome back " + user.Username;
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            ViewBag.Error = "Username or Password is incorect";
+            return View(user);
+        }
+        #endregion
 
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(int? id)
