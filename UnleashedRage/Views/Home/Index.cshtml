@@ -1,11 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-<br /><br /><br />
-<br /><br /><br />
-<br /><br /><br />
-<br /><br /><br />
-<br /><br /><br />
+@if(ViewBag.Welcome != null)
+{
+    <h4 class="text-success">@ViewBag.Welcome</h4>
+}
 <h2>The Comic</h2>
 <br /><br /><br />
 <br /><br /><br />
