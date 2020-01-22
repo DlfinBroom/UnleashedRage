@@ -1,16 +1,19 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@if(ViewBag.Welcome != null)
+@if (ViewBag.Welcome != null)
 {
     <h4 class="text-success">@ViewBag.Welcome</h4>
 }
 <h2>The Comic</h2>
-<br /><br /><br />
-<br /><br /><br />
-<br /><br /><br />
-<br /><br /><br />
-<br /><br /><br />
+@if (ViewBag.CurrentPage != null)
+{
+    <h4>@ViewBag.CurrentPage.ToString()</h4>
+    var base64 = Convert.ToBase64String(ViewBag.CurrentPage.Image);
+    var imgSrc = String.Format("data:image/jpeg;base64,{0}", base64);
+
+    <img class="pre-scrollable" src="@imgSrc" />
+}
 <h2>Merch</h2>
 <br /><br /><br />
 <br /><br /><br />

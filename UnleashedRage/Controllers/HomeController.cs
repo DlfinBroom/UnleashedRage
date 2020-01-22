@@ -4,14 +4,25 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using UnleashedRage.Database;
 using UnleashedRage.Models;
+using static System.Net.Mime.MediaTypeNames;
 
-namespace UnleashedRage.Controllers
-{
-    public class HomeController : Controller
-    {
+namespace UnleashedRage.Controllers {
+    public class HomeController : Controller {
+        private readonly URContext _context;
+
+        public HomeController (URContext context) {
+            _context = context;
+        }
+
         public IActionResult Index()
         {
+            // get latest issue from database
+            ComicPage latestIssue = ComicPageDB.GetOnePage(_context, 9);
+
+            // send image to Home.Index view
+            ViewBag.CurrentPage = latestIssue;
             return View();
         }
 

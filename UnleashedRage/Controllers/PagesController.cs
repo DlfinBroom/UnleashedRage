@@ -48,7 +48,7 @@ namespace UnleashedRage.Database {
                 page.Issue = input.Issue;
                 page.Volume = input.Volume;
 
-                if (input.Image.ContentType.ToLower() != "image/jpg" &&
+                if (input.Image.ContentType.ToLower() != "image/jpeg" &&
                     input.Image.ContentType.ToLower() != "image/png")
                 {
                     // add error message here
