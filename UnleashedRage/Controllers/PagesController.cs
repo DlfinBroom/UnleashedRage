@@ -26,12 +26,8 @@ namespace UnleashedRage.Database {
                 return NotFound();
             }
 
-            var comicPage = await _context.ComicPage
-                .FirstOrDefaultAsync(m => m.PageID == id);
-            if (comicPage == null) {
-                return NotFound();
-            }
-
+            ComicPage comicPage = ComicPageDB.GetOnePage(_context, (int)id);
+            ViewBag.ComicPage = comicPage;
             return View(comicPage);
         }
 

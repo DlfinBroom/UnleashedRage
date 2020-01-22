@@ -50,7 +50,7 @@ namespace UnleashedRage.Controllers {
                 merch.Name = input.Name;
                 merch.Price = input.Price;
 
-                if (input.MerchImage.ContentType.ToLower() != "image/jpg" &&
+                if (input.MerchImage.ContentType.ToLower() != "image/jpeg" &&
                     input.MerchImage.ContentType.ToLower() != "image/png")
                 {
                     // add error message here
@@ -63,13 +63,13 @@ namespace UnleashedRage.Controllers {
 
                 merch.MerchImage = imageByteArray;
                 if (MerchDB.AddMerch(_context, merch) == true)
-                    ViewData["Message"] = merch.ToString() + " was added!";
+                    ViewBag.Message = merch.ToString() + " was added!";
                 else
-                    ViewData["ErrorMessage"] = "An error occured, try again later";
+                    ViewBag.ErrorMessage = "An error occured, try again later";
 
                 return View();
             }
-            ViewData["ErrorMessage"] = "An error occured, try again later";
+            ViewBag.ErrorMessage = "An error occured, try again later";
             return View(input);
         }
         #endregion
