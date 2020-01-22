@@ -27,12 +27,8 @@ namespace UnleashedRage.Controllers {
                 return NotFound();
             }
 
-            var merch = await _context.Merch
-                .FirstOrDefaultAsync(m => m.MerchID == id);
-            if (merch == null) {
-                return NotFound();
-            }
-
+            Merch merch = MerchDB.GetOneMerch(_context, (int)id);
+            ViewBag.Merch = merch;
             return View(merch);
         }
 
