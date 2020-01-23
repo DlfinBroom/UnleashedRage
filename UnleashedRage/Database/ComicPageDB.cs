@@ -51,6 +51,27 @@ namespace UnleashedRage.Database
         }
 
         /// <summary>
+        /// Returns the comic page with the most recent Released Date
+        /// </summary>
+        public static ComicPage GetLatestPage(URContext context)
+        {
+            try
+            {
+                ComicPage page = (from c in context.ComicPage
+                                  select c).Single<ComicPage>();
+                return page;
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                context.Dispose();
+            }
+        }
+
+        /// <summary>
         /// Returns one comic page with the same volume and issue given
         /// </summary>
         /// <returns>
@@ -101,6 +122,7 @@ namespace UnleashedRage.Database
         public static List<ComicPage> GetAllPages(URContext context) {
             try {
                 List<ComicPage> page = (from c in context.ComicPage
+                                        orderby c.Volume, c.Issue
                                         select c).ToList<ComicPage>();
                 return page;
             }

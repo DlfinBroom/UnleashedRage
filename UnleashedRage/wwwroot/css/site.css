@@ -18,6 +18,16 @@ html {
   }
 }
 
+#PageView {
+    height: 1000px;
+    overflow: scroll;
+}
+#CurrentPage{
+    align-content: center;
+    width: 100%;
+    
+}
+
 .border-top {
   border-top: 1px solid #e5e5e5;
 }
