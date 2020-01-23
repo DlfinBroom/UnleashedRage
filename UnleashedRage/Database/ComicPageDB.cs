@@ -50,13 +50,15 @@ namespace UnleashedRage.Database
                 return false;
         }
 
+        /// <summary>
+        /// Returns the comic page with the most recent Released Date
+        /// </summary>
         public static ComicPage GetLatestPage(URContext context)
         {
             try
             {
                 ComicPage page = (from c in context.ComicPage
-                                  orderby c.ReleaseDate descending
-                                  select c).Single();
+                                  select c).Single<ComicPage>();
                 return page;
             }
             catch

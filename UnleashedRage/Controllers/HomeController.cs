@@ -19,9 +19,10 @@ namespace UnleashedRage.Controllers {
         public IActionResult Index()
         {
             // get latest issue from database
-            ComicPage latestIssue = ComicPageDB.GetOnePage(_context, 9);
+            ComicPage latestIssue = ComicPageDB.GetLatestPage(_context);
+            //List<ComicPage> latestIssue = ComicPageDB.GetOneVolume(_context, 1);
 
-            // send image to Home.Index view
+            // send issue to Home.Index view
             ViewBag.CurrentPage = latestIssue;
             return View();
         }
