@@ -23,8 +23,7 @@ namespace UnleashedRage.Controllers {
             ViewBag.AllPages = allIssues;
 
             // Get and sent latest issue
-            ComicPage latestIssue = ComicPageDB.GetLatestPage(_context);
-            ViewBag.CurrentPage = latestIssue;
+            ViewBag.CurrentPage = allIssues[allIssues.Count-1];
             return View();
         }
 
