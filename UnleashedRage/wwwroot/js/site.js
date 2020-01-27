@@ -12,14 +12,3 @@ function closeNav() {
     document.getElementById("Archive").style.width = "0";
     // document.getElementById("ArchiveOpen").style.visibility = "visible"
 }
-
-function changeImage(page) {
-    var base64 = Convert.ToBase64String(page);
-    var imgSrc = String.Format("data:image/jpeg;base64,{0}", base64);
-
-    document.getElementById("CurrentPage").src = imgSrc;
-}
-
-function test() {
-    document.getElementById("Tite") = "Test";
-}
