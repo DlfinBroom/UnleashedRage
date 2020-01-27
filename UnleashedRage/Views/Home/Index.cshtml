@@ -6,14 +6,15 @@
     <h4 class="text-success">@ViewBag.Welcome</h4>
 }
 
+<h1 id="Title">Not title</h1>
+
 <div id="ArchiveOpen">
     <button class="openbtn" onclick="openNav()"> > Comic Archive</button>
 </div>
 
 <!-- Image Viewer -->
 <div id="PageView">
-    @if (ViewBag.CurrentPage != null)
-    {
+    @{
         var base64 = Convert.ToBase64String(ViewBag.CurrentPage.Image);
         var imgSrc = String.Format("data:image/jpeg;base64,{0}", base64);
 
@@ -28,32 +29,15 @@
     @{int currentVolume = -1; }
     @for (int a = 0; a < ViewBag.AllPages.Count; a++)
     {
-        if (ViewBag.AllPages[a].Volume != currentVolume)
+        ComicPage currentPage = ViewBag.AllPages[a];
+        if (currentPage.Volume != currentVolume)
         {
-            <h4>Volume @ViewBag.AllPages[a].Volume</h4>
-            currentVolume = ViewBag.AllPages[a].Volume;
+            <h4>Volume @currentPage.Volume</h4>
+            currentVolume = currentPage.Volume;
         }
-        <a href="#" onclick="changeImage(@ViewBag.AllPages[a])">Issue @ViewBag.AllPages[a].Issue</a>
+        <button class="openbtn" onclick="test()">Issue @currentPage.Issue</button>
     }
 </div>
-<script>
-    function openNav() {
-        document.getElementById("Archive").style.width = "250px";
-        // document.getElementById("ArchiveOpen").style.visibility = "hidden"
-    }
-
-    function closeNav() {
-        document.getElementById("Archive").style.width = "0";
-        // document.getElementById("ArchiveOpen").style.visibility = "visible"
-    }
-
-    function changeImage(page) {
-        var base64 = Convert.ToBase64String(page.Image);
-        var imgSrc = String.Format("data:image/jpeg;base64,{0}", base64);
-
-        document.getElementById("CurrentPage").src = imgSrc;
-    }
-</script>
 
 <h2>Merch</h2>
 <br /><br /><br />

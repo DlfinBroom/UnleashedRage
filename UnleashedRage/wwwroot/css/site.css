@@ -44,6 +44,10 @@ button.accept-policy {
   line-height: inherit;
 }
 
+#ArchiveButtons{
+    width: 100px;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
