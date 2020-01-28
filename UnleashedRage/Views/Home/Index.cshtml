@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@using System.IO
 @if (ViewBag.Welcome != null)
 {
     <h4 class="text-success">@ViewBag.Welcome</h4>
@@ -33,10 +34,7 @@
             <h4>Volume @currentPage.Volume</h4>
             currentVolume = currentPage.Volume;
         }
-        <button class="openbtn" onclick="
-            @{document.getElementById("CurrentPage").src = 
-                    String.Format("data:image/jpeg;base64,{0}", Convert.ToBase64String(ViewBag.CurrentPage.Image)); 
-        }">Issue @currentPage.Issue</button>
+        <button class="openbtn" onclick="changeImage(currentPage.Image)">Issue @currentPage.Issue</button>
     }
 </div>
 

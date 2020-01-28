@@ -12,3 +12,8 @@ function closeNav() {
     document.getElementById("Archive").style.width = "0";
     // document.getElementById("ArchiveOpen").style.visibility = "visible"
 }
+
+function changeImage(image) {
+    document.getElementById("CurrentPage").src =
+        String.Format("data:image/jpeg;base64,{0}", Convert.ToBase64String(image));
+}
