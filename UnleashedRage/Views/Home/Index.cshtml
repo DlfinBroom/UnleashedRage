@@ -6,10 +6,6 @@
     <h4 class="text-success">@ViewBag.Welcome</h4>
 }
 
-<div id="ArchiveOpen">
-    <button class="openbtn" onclick="openNav()"> > Comic Archive</button>
-</div>
-
 <!-- Image Viewer -->
 <div id="PageView">
     @if (ViewBag.CurrentPage != null)
@@ -20,40 +16,6 @@
         <img id="CurrentPage" src="@imgSrc" />
     }
 </div>
-
-<!-- Comic Archive -->
-<div id="Archive" class="sidebar">
-    <h4>Comic Archive</h4>
-    <a href="javascript:void(0)" id="ArchiveClose" class="closebtn" onclick="closeNav()"> < </a>
-    @{int currentVolume = -1; }
-    @for (int a = 0; a < ViewBag.AllPages.Count; a++)
-    {
-        if (ViewBag.AllPages[a].Volume != currentVolume)
-        {
-            <h4>Volume @ViewBag.AllPages[a].Volume</h4>
-            currentVolume = ViewBag.AllPages[a].Volume;
-        }
-        <a href="#" onclick="changeImage(@ViewBag.AllPages[a])">Issue @ViewBag.AllPages[a].Issue</a>
-    }
-</div>
-<script>
-    function openNav() {
-        document.getElementById("Archive").style.width = "250px";
-        // document.getElementById("ArchiveOpen").style.visibility = "hidden"
-    }
-
-    function closeNav() {
-        document.getElementById("Archive").style.width = "0";
-        // document.getElementById("ArchiveOpen").style.visibility = "visible"
-    }
-
-    function changeImage(page) {
-        var base64 = Convert.ToBase64String(page.Image);
-        var imgSrc = String.Format("data:image/jpeg;base64,{0}", base64);
-
-        document.getElementById("CurrentPage").src = imgSrc;
-    }
-</script>
 
 <h2>Merch</h2>
 <br /><br /><br />
