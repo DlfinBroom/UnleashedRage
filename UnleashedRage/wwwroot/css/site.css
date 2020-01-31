@@ -16,7 +16,7 @@ a.navbar-brand {
 }
 
 #spacer{
-    font-size: 1vh;
+    font-size: 8vh;
 }
 @media (min-width: 768){
     #spacer{
