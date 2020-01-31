@@ -1,10 +1,27 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+#Navbar{
+    position: fixed;
+    align-content: center;
+    width: 100%;
+    margin-top: 0;
+    height: 10vh;
+}
+
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    font-size: 32px;
+}
+
+#spacer{
+    font-size: 1vh;
+}
+@media (min-width: 768){
+    #spacer{
+        font-size: 100px;
+    }
 }
 
 /* Sticky footer styles
@@ -19,13 +36,15 @@ html {
 }
 
 #PageView {
-    height: 1000px;
-    overflow: scroll;
+    height: 85vh;
+    overflow-x: visible;
+    overflow-y: scroll;
+    max-width: 1000px;
 }
-#CurrentPage{
+
+#CurrentPage {
     align-content: center;
     width: 100%;
-    
 }
 
 .border-top {
@@ -53,7 +72,6 @@ html {
 
 body {
   /* Margin bottom by footer height */
-  margin-bottom: 60px;
 }
 .footer {
   position: absolute;
@@ -67,27 +85,38 @@ body {
 
 /* The sidebar menu */
 .sidebar {
-    height: 100%; /* 100% Full-height */
     width: 0; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
     z-index: 1; /* Stay on top */
     top: 10%;
     bottom: 10%;
     left: 0;
-    height: 80%;
+    height: 80vh;
+    max-width: 10vw;
     background-color: #111; /* Black*/
     overflow-x: hidden; /* Disable horizontal scroll */
     overflow-y: scroll;
     padding-top: 60px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
-    color:azure;
+    color: azure;
+    width: 0px;
+    border-radius: 0px 12px 12px 0px;
 }
 
 /* The sidebar links */
 .sidebar a {
-    padding: 8px 8px 8px 32px;
+    margin: 10px 20px;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 24px;
+    color: #e5e5e5;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar h4 {
+    margin: 10px 10px;
+    text-decoration: none;
+    font-size: 24px;
     color: #e5e5e5;
     display: block;
     transition: 0.3s;
@@ -113,8 +142,10 @@ body {
     cursor: pointer;
     background-color: #111;
     color: white;
-    padding: 10px 15px;
     border: none;
+    padding: 1vh;
+    margin-top: 1vh;
+    border-radius: 0px 12px 12px 0px;
 }
 
 .openbtn:hover {
@@ -124,7 +155,7 @@ body {
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #ArchiveOpen {
     transition: margin-left .5s; /* If you want a transition effect */
-    padding: 20px;
+    padding-top: 0;
     position: fixed; /* Stay in place */
     z-index: 1; /* Stay on top */
     left: 0;
@@ -135,12 +166,16 @@ body {
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
-    .sidebar {
-        padding-top: 15px;
+@media screen and (max-width: 768px) {
+    .sidebar{
+        max-width: 35vw;
     }
 
     .sidebar a {
         font-size: 18px;
+    }
+
+    .sizebar h4 {
+        font-size: 20px;
     }
 } 

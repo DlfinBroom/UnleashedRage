@@ -19,7 +19,8 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav id="Navbar"
+             class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Unleashed Rage</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -45,24 +46,65 @@
                         </li>
                     </ul>
                 </div>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1 text-secondary">
-                        <li>
-                            <a class="nav-link text-secondary" asp-area="" asp-controller="Home" asp-action="Privacy">Mod Options Only:</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-secondary" asp-area="" asp-controller="Pages" asp-action="Index">Edit Pages</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-secondary" asp-area="" asp-controller="Merches" asp-action="Index">Edit Merch</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-secondary" asp-area="" asp-controller="Users" asp-action="Index">Edit Users</a>
-                        </li>
-                    </ul>
-                </div>
+            </div>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <ul class="navbar-nav flex-grow-1 text-secondary">
+                    <li>
+                        <a class="nav-link text-secondary" asp-area="" asp-controller="Home" asp-action="Privacy">Mod Options Only:</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" asp-area="" asp-controller="Pages" asp-action="Index">Edit Pages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" asp-area="" asp-controller="Merches" asp-action="Index">Edit Merch</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" asp-area="" asp-controller="Users" asp-action="Index">Edit Users</a>
+                    </li>
+                </ul>
             </div>
         </nav>
+
+        <br />
+        <br />
+        <br />
+        <div id="ArchiveOpen">
+            <button class="openbtn" onclick="openNav()"> > </button>
+        </div>
+
+        <!-- Comic Archive -->
+        <div id="Archive" class="sidebar">
+            <a href="javascript:void(0)" id="ArchiveClose" class="closebtn" onclick="closeNav()"> < </a>
+            @{int currentVolume = -1; }
+            @for (int a = 0; a < ViewBag.AllPages.Count; a++)
+            {
+                if (ViewBag.AllPages[a].Volume != currentVolume)
+                {
+                    <h4>Volume @ViewBag.AllPages[a].Volume</h4>
+                    currentVolume = ViewBag.AllPages[a].Volume;
+                }
+                <a href="#" onclick="changeImage(@ViewBag.AllPages[a])">Issue @ViewBag.AllPages[a].Issue</a>
+            }
+        </div>
+        <script>
+            function openNav() {
+                document.getElementById("Archive").style.width = "50vh";
+                document.getElementById("ArchiveOpen").style.visibility = "hidden"
+            }
+
+            function closeNav() {
+                document.getElementById("Archive").style.width = "0";
+                document.getElementById("ArchiveOpen").style.visibility = "visible"
+            }
+
+            function changeImage(page) {
+                var base64 = Convert.ToBase64String(page.Image);
+                var imgSrc = String.Format("data:image/jpeg;base64,{0}", base64);
+
+                document.getElementById("CurrentPage").src = imgSrc;
+            }
+        </script>
+
     </header>
     <div class="container">
         <partial name="_CookieConsentPartial" />
@@ -73,7 +115,6 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            Follow me on social media! social media links here
             &copy; 2020 - UnleashedRage - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
