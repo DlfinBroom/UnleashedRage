@@ -69,12 +69,11 @@
         <br />
         <br />
         <div id="ArchiveOpen">
-            <button class="openbtn" onclick="openNav()"> > Comic Archive</button>
+            <button class="openbtn" onclick="openNav()"> > </button>
         </div>
 
         <!-- Comic Archive -->
         <div id="Archive" class="sidebar">
-            <h4>Comic Archive</h4>
             <a href="javascript:void(0)" id="ArchiveClose" class="closebtn" onclick="closeNav()"> < </a>
             @{int currentVolume = -1; }
             @for (int a = 0; a < ViewBag.AllPages.Count; a++)
@@ -89,7 +88,7 @@
         </div>
         <script>
             function openNav() {
-                document.getElementById("Archive").style.width = "25%";
+                document.getElementById("Archive").style.width = "50vh";
                 document.getElementById("ArchiveOpen").style.visibility = "hidden"
             }
 
