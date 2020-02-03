@@ -2,3 +2,4 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+/* Set the width of the sidebar to 250px and the left margin of the page content to 250px */

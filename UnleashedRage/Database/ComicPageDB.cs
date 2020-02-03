@@ -120,6 +120,7 @@ namespace UnleashedRage.Database
         public static List<ComicPage> GetAllPages(URContext context) {
             try {
                 List<ComicPage> page = (from c in context.ComicPage
+                                        orderby c.Volume, c.Issue
                                         select c).ToList<ComicPage>();
                 return page;
             }

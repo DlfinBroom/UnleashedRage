@@ -1,10 +1,27 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+#Navbar{
+    position: fixed;
+    align-content: center;
+    width: 100%;
+    margin-top: 0;
+    height: 10vh;
+}
+
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    font-size: 32px;
+}
+
+#spacer{
+    font-size: 8vh;
+}
+@media (min-width: 768){
+    #spacer{
+        font-size: 100px;
+    }
 }
 
 /* Sticky footer styles
@@ -16,6 +33,18 @@ html {
   html {
     font-size: 16px;
   }
+}
+
+#PageView {
+    height: 85vh;
+    overflow-x: visible;
+    overflow-y: scroll;
+    max-width: 1000px;
+}
+
+#CurrentPage {
+    align-content: center;
+    width: 100%;
 }
 
 .border-top {
@@ -43,7 +72,6 @@ html {
 
 body {
   /* Margin bottom by footer height */
-  margin-bottom: 60px;
 }
 .footer {
   position: absolute;
@@ -53,4 +81,170 @@ body {
   /* Set the fixed height of the footer here */
   height: 60px;
   line-height: 60px; /* Vertically center the text there */
+}
+
+/* The sidebar menu */
+.sidebar {
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 10%;
+    bottom: 10%;
+    left: 0;
+    height: 80vh;
+    max-width: 10vw;
+    background-color: #111; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    overflow-y: scroll;
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
+    color: azure;
+    width: 0px;
+    border-radius: 0px 12px 12px 0px;
+}
+
+/* The sidebar links */
+.sidebar a {
+    margin: 10px 20px;
+    text-decoration: none;
+    font-size: 24px;
+    color: #e5e5e5;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar h4 {
+    margin: 10px 10px;
+    text-decoration: none;
+    font-size: 24px;
+    color: #e5e5e5;
+    display: block;
+    transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidebar a:hover {
+    color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+/* The button used to open the sidebar */
+.openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #111;
+    color: white;
+    border: none;
+    padding: 1vh;
+    margin-top: 1vh;
+    border-radius: 0px 12px 12px 0px;
+}
+
+.openbtn:hover {
+    background-color: #444;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#ArchiveOpen {
+    transition: margin-left .5s; /* If you want a transition effect */
+    padding-top: 0;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    left: 0;
+}
+
+#ArchiveClose{
+
+}
+
+#AuthorBio {
+    background-color: beige;
+    padding-bottom: 5px;
+}
+
+#AuthorImage {
+    width: 100px;
+    height: 100px;
+    float: left;
+    display: inline;
+    margin: 1vh;
+}
+
+#AuthorDesc {
+    font-size: medium;
+    text-wrap: normal;
+    margin: 10px;
+}
+
+#AuthorLinks{
+    margin-left: 10px;
+}
+#AuthorLinks a{
+    text-wrap: avoid;
+}
+
+#Media2, #Media4{
+    float: right;
+    display: inline;
+    width: 55vw;
+}
+
+#Merch{
+    background-color: azure;
+    padding: 10px 10px .1px 10px;
+}
+#Merch button {
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+    float: left;
+    display: inline;
+}
+
+#MerchText {
+    height: 100px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        max-width: 35vw;
+    }
+
+    .sidebar a {
+        font-size: 18px;
+    }
+
+    .sizebar h4 {
+        font-size: 20px;
+    }
+
+    #AuthorBio {
+    }
+
+    #AuthorImage {
+        width: 22vw;
+        height: 22vw;
+    }
+
+    #AuthorDesc {
+        font-size: small;
+    }
+
+    #Merch button{
+        width: 20vw;
+        height: 20vw;
+    }
+
+    #MerchText{
+        height: 20vw;
+    }
 }
