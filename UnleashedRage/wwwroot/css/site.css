@@ -165,9 +165,41 @@ body {
 
 }
 
+#AuthorBio {
+    background-color: beige;
+    padding-bottom: 5px;
+}
+
+#AuthorImage {
+    width: 100px;
+    height: 100px;
+    float: left;
+    display: inline;
+    margin: 1vh;
+}
+
+#AuthorDesc {
+    font-size: medium;
+    text-wrap: normal;
+    margin: 10px;
+}
+
+#AuthorLinks{
+    margin-left: 10px;
+}
+#AuthorLinks a{
+    text-wrap: avoid;
+}
+
+#Media2, #Media4{
+    float: right;
+    display: inline;
+    width: 55vw;
+}
+
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-width: 768px) {
-    .sidebar{
+    .sidebar {
         max-width: 35vw;
     }
 
@@ -178,20 +210,16 @@ body {
     .sizebar h4 {
         font-size: 20px;
     }
-} 
 
-#AuthorImage{
-    width: 200px;
-    height: 200px;
-    flex: 1;
-    float:left;
-}
+    #AuthorBio {
+    }
 
-#AuthorBio{
-    
-}
+    #AuthorImage {
+        width: 22vw;
+        height: 22vw;
+    }
 
-#AuthorDesc{
-    flex: 3;
-    float:right;
+    #AuthorDesc {
+        font-size: small;
+    }
 }

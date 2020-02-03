@@ -65,18 +65,29 @@
 <br /><br /><br />
 <br /><br /><br />
 
-<h2>The Author</h2>
-<div id="AuthorBio" class="container">
-    <div id="AuthorImage">
-        <img  src="~/Images/PlaceholderImage.jpg" class="" />
+<div id="AuthorBio">
+    <!-- Image is a placeholder -->
+    @if (ViewBag.CurrentPage != null)
+    {
+        var base64 = Convert.ToBase64String(ViewBag.CurrentPage.Image);
+        var imgSrc = String.Format("data:image/jpeg;base64,{0}", base64);
+
+        <img id="AuthorImage" src="@imgSrc" />
+    }
+    <p id="AuthorDesc" class="">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </p>
+    <br />
+    <div id="AuthorLinks">
+        <a href="#" id="Email">Email@Email.com</a><br />
+        <a href="#" id="Media1">Social Media link 1</a>
+        <a href="#" id="Media2">Social Media link 2</a>
+        <a href="#" id="Media3">Social Media link 3</a>
+        <a href="#" id="Media4">Social Media link 4</a>
     </div>
-    <div id="AuthorDesc">
-        <p class="">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-    </div>
+
 </div>
 <br /><br /><br />
