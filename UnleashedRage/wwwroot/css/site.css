@@ -197,6 +197,22 @@ body {
     width: 55vw;
 }
 
+#Merch{
+    background-color: azure;
+    padding: 10px 10px .1px 10px;
+}
+#Merch button {
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+    float: left;
+    display: inline;
+}
+
+#MerchText {
+    height: 100px;
+}
+
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-width: 768px) {
     .sidebar {
@@ -221,5 +237,14 @@ body {
 
     #AuthorDesc {
         font-size: small;
+    }
+
+    #Merch button{
+        width: 20vw;
+        height: 20vw;
+    }
+
+    #MerchText{
+        height: 20vw;
     }
 }
