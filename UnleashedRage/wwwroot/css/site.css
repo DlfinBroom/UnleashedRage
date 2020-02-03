@@ -165,6 +165,21 @@ body {
 
 }
 
+#Merch{
+    background-color: aqua;
+    padding: 10px;
+}
+
+#MerchText{
+    
+    float: right;
+}
+
+#Merch button {
+    width: 100px;
+    height: 100px;
+}
+
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-width: 768px) {
     .sidebar{
@@ -177,5 +192,10 @@ body {
 
     .sizebar h4 {
         font-size: 20px;
+    }
+
+    #Merch button {
+        width: 20vw;
+        height: 20vw;
     }
 } 
