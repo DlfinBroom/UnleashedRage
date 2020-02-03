@@ -1,93 +1,96 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-@if (ViewBag.Welcome != null)
-{
-    <h4 class="text-success">@ViewBag.Welcome</h4>
-}
-
-<br id="spacer" />
-
-<!-- Image Viewer -->
-<div id="ArchiveOpen">
-    <button class="openbtn" onclick="openNav()"> > </button>
-</div>
-
-
-<div id="PageView" class="align-content-xl-center">
-    @if (ViewBag.CurrentPage != null)
+﻿<body>
+    @{
+        ViewData["Title"] = "Home Page";
+    }
+    @if (ViewBag.Welcome != null)
     {
-        var base64 = Convert.ToBase64String(ViewBag.CurrentPage.Image);
-        var imgSrc = String.Format("data:image/jpeg;base64,{0}", base64);
-
-        <img id="CurrentPage" src="@imgSrc" />
-    }
-</div>
-
-<!-- Comic Archive -->
-<div id="Archive" class="sidebar">
-    <a href="javascript:void(0)" id="ArchiveClose" class="closebtn" onclick="closeNav()"> < </a>
-    @{int currentVolume = -1; }
-    @for (int a = 0; a < ViewBag.AllPages.Count; a++)
-    {
-        if (ViewBag.AllPages[a].Volume != currentVolume)
-        {
-            <h4>Volume @ViewBag.AllPages[a].Volume</h4>
-            currentVolume = ViewBag.AllPages[a].Volume;
-        }
-        <a href="#" onclick="changeImage(@ViewBag.AllPages[a])">Issue @ViewBag.AllPages[a].Issue</a>
-    }
-</div>
-<script>
-    function openNav() {
-        document.getElementById("Archive").style.width = "50vh";
-        document.getElementById("ArchiveOpen").style.visibility = "hidden"
+        <h4 class="text-success">@ViewBag.Welcome</h4>
     }
 
-    function closeNav() {
-        document.getElementById("Archive").style.width = "0";
-        document.getElementById("ArchiveOpen").style.visibility = "visible"
-    }
+    <br id="spacer" />
 
-    function changeImage(page) {
-        var base64 = Convert.ToBase64String(page.Image);
-        var imgSrc = String.Format("data:image/jpeg;base64,{0}", base64);
-
-        document.getElementById("CurrentPage").src = imgSrc;
-    }
-</script>
-<br />
-
-<div id="Merch">
-    <h2 id="MerchTitle">Merch</h2>
-    <Button id="Tshirt"></Button>
-    <Button id="Sticker"></Button>
-    <p id="MerchText">Sorry, merch is unavailable at the moment</p>
-</div>
-
-<div id="AuthorBio">
-    <!-- Image is a placeholder -->
-    @if (ViewBag.CurrentPage != null)
-    {
-        var base64 = Convert.ToBase64String(ViewBag.CurrentPage.Image);
-        var imgSrc = String.Format("data:image/jpeg;base64,{0}", base64);
-
-        <img id="AuthorImage" src="@imgSrc" />
-    }
-    <p id="AuthorDesc" class="">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </p>
-    <br />
-    <div id="AuthorLinks">
-        <a href="#" id="Email">Email@Email.com</a><br />
-        <a href="#" id="Media1">Social Media link 1</a>
-        <a href="#" id="Media2">Social Media link 2</a>
-        <a href="#" id="Media3">Social Media link 3</a>
-        <a href="#" id="Media4">Social Media link 4</a>
+    <!-- Image Viewer -->
+    <div id="ArchiveOpen">
+        <button class="openbtn" onclick="openNav()"> > </button>
     </div>
 
-</div>
-<br /><br /><br />
+
+    <div id="PageView" class="center">
+        @if (ViewBag.CurrentPage != null)
+        {
+            var base64 = Convert.ToBase64String(ViewBag.CurrentPage.Image);
+            var imgSrc = String.Format("data:image/jpeg;base64,{0}", base64);
+
+            <img id="CurrentPage" src="@imgSrc" 
+                 class="center"/>
+        }
+    </div>
+
+    <!-- Comic Archive -->
+    <div id="Archive" class="sidebar">
+        <a href="javascript:void(0)" id="ArchiveClose" class="closebtn" onclick="closeNav()"> < </a>
+        @{int currentVolume = -1; }
+        @for (int a = 0; a < ViewBag.AllPages.Count; a++)
+        {
+            if (ViewBag.AllPages[a].Volume != currentVolume)
+            {
+                <h4>Volume @ViewBag.AllPages[a].Volume</h4>
+                currentVolume = ViewBag.AllPages[a].Volume;
+            }
+            <a href="#" onclick="changeImage(@ViewBag.AllPages[a])">Issue @ViewBag.AllPages[a].Issue</a>
+        }
+    </div>
+    <script>
+        function openNav() {
+            document.getElementById("Archive").style.width = "50vh";
+            document.getElementById("ArchiveOpen").style.visibility = "hidden"
+        }
+
+        function closeNav() {
+            document.getElementById("Archive").style.width = "0";
+            document.getElementById("ArchiveOpen").style.visibility = "visible"
+        }
+
+        function changeImage(page) {
+            var base64 = Convert.ToBase64String(page.Image);
+            var imgSrc = String.Format("data:image/jpeg;base64,{0}", base64);
+
+            document.getElementById("CurrentPage").src = imgSrc;
+        }
+    </script>
+    <br />
+
+    <div id="Merch">
+        <h2 id="MerchTitle">Merch</h2>
+        <Button id="Tshirt"></Button>
+        <Button id="Sticker"></Button>
+        <p id="MerchText">Sorry, merch is unavailable at the moment</p>
+    </div>
+
+    <div id="AuthorBio">
+        <!-- Image is a placeholder -->
+        @if (ViewBag.CurrentPage != null)
+        {
+            var base64 = Convert.ToBase64String(ViewBag.CurrentPage.Image);
+            var imgSrc = String.Format("data:image/jpeg;base64,{0}", base64);
+
+            <img id="AuthorImage" src="@imgSrc" />
+        }
+        <p id="AuthorDesc" class="">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <br />
+        <div id="AuthorLinks">
+            <a href="#" id="Email">Email@Email.com</a><br />
+            <a href="#" id="Media1">Social Media link 1</a>
+            <a href="#" id="Media2">Social Media link 2</a>
+            <a href="#" id="Media3">Social Media link 3</a>
+            <a href="#" id="Media4">Social Media link 4</a>
+        </div>
+
+    </div>
+    <br /><br /><br />
+</body>
