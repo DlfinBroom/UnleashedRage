@@ -31,7 +31,7 @@ namespace UnleashedRage.Migrations
                     MerchID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(maxLength: 32, nullable: true),
-                    Price = table.Column<int>(nullable: false),
+                    Price = table.Column<double>(nullable: false),
                     MerchImage = table.Column<byte[]>(nullable: true)
                 },
                 constraints: table =>
@@ -48,6 +48,7 @@ namespace UnleashedRage.Migrations
                     Username = table.Column<string>(maxLength: 32, nullable: false),
                     Password = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: false),
+                    SendEmail = table.Column<string>(nullable: false),
                     CurrPage = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

@@ -27,7 +27,7 @@ namespace UnleashedRage
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<URContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("URContext")));
+                    options.UseSqlServer(Configuration.GetConnectionString("URConection")));
 
             services.Configure<CookiePolicyOptions>(options =>
             {

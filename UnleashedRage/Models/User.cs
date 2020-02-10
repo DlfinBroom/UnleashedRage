@@ -21,6 +21,8 @@ namespace UnleashedRage.Models
         [Required, DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
+        public bool SendEmail { get; set; }
+
         public string CurrPage { get; set; }
 
         public User() {
