@@ -15,7 +15,7 @@ namespace UnleashedRage.Models
         public string Name { get; set; }
 
         [DataType(DataType.Currency)]
-        public int Price { get; set; }
+        public double Price { get; set; }
 
         public byte[] MerchImage { get; set; }
     }
