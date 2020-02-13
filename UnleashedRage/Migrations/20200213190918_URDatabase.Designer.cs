@@ -10,7 +10,7 @@ using UnleashedRage.Database;
 namespace UnleashedRage.Migrations
 {
     [DbContext(typeof(URContext))]
-    [Migration("20200210203458_URDatabase")]
+    [Migration("20200213190918_URDatabase")]
     partial class URDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
