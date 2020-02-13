@@ -14,12 +14,35 @@ namespace UnleashedRage.Database
         /// <returns>
         /// Returns true if only one page was affected, returns false otherwise
         /// </returns>
-        public static bool AddPage(URContext context, ComicPage page) {
-            context.Add(page);
-            if (context.SaveChanges() == 1)
-                return true;
+        public static bool? AddPage(URContext context, ComicPage page) {
+            if (!pageExists(context, page.Volume + " " + page.Issue))
+            {
+                context.Add(page);
+                if (context.SaveChanges() == 1)
+                    return true;
+                else
+                    return false;
+            }
             else
-                return false;
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Returns if a page with the same volume and issue exists in the database
+        /// </summary>
+        private static bool pageExists(URContext context, string volumeIssue)
+        {
+            return false;
+            //List<String> things = (from c in context.ComicPage
+            //                       orderby c.Volume, c.Issue
+            //                       select c.Volume + " " + c.Issue).ToList<String>();
+            //if (things.Contains(volumeIssue))
+            //{
+            //    return true;
+            //}
+            //return false;
         }
 
         /// <summary>
