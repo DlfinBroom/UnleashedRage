@@ -44,6 +44,7 @@ namespace UnleashedRage.Database {
                 page.Issue = input.Issue;
                 page.Volume = input.Volume;
 
+                // Makes sure the
                 if (input.Image.ContentType.ToLower() != "image/jpeg" &&
                     input.Image.ContentType.ToLower() != "image/png")
                 {
@@ -51,14 +52,21 @@ namespace UnleashedRage.Database {
                     throw new Exception();
                 }
 
+                // Transforms the file into a byte[]
                 var ms = new MemoryStream();
                 input.Image.OpenReadStream().CopyTo(ms);
                 byte[] imageByteArray = ms.ToArray();
-
                 page.Image = imageByteArray;
+
+                // Sets the date added to today
                 page.ReleaseDate = DateTime.Today;
-                if (ComicPageDB.AddPage(_context, page) == true)
+
+                // Tries to add the page to the database, and displays a message if it worked or not
+                bool? pageAdded = ComicPageDB.AddPage(_context, page);
+                if (pageAdded == true)
                     ViewData["Message"] = page.ToString() + " was added!";
+                else if (pageAdded == null)
+                    ViewData["ErrorMessage"] = input.ToString() + " already exists, edit that page or make a new one";
                 else
                     ViewData["ErrorMessage"] = "An error occured, try again later";
 
