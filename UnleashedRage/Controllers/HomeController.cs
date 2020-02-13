@@ -23,7 +23,10 @@ namespace UnleashedRage.Controllers {
             ViewBag.AllPages = allIssues;
 
             // Get and sent latest issue
-            ViewBag.CurrentPage = allIssues[allIssues.Count-1];
+            if (allIssues.Any())
+            {
+                ViewBag.CurrentPage = allIssues[allIssues.Count - 1];
+            }
             return View();
         }
 
