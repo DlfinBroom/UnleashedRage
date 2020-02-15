@@ -14,7 +14,8 @@ namespace UnleashedRage.Database
         /// <returns>
         /// Returns true if only one user was affected, returns false otherwise
         /// </returns>
-        public static bool AddUser(URContext context, User user) {
+        public static bool AddUser(URContext context, User user)
+        {
             context.Add(user);
             if (context.SaveChanges() == 1)
                 return true;
@@ -28,7 +29,8 @@ namespace UnleashedRage.Database
         /// <returns>
         /// Returns true if only one user was affected, returns false otherwise
         /// </returns>
-        public static bool UpdateUser(URContext context, User user) {
+        public static bool UpdateUser(URContext context, User user)
+        {
             context.Update(user);
             if (context.SaveChanges() == 1)
                 return true;
@@ -42,7 +44,8 @@ namespace UnleashedRage.Database
         /// <returns>
         /// Returns true if only one user was affected, returns false otherwise
         /// </returns>
-        public static bool DeleteUser(URContext context, User user) {
+        public static bool DeleteUser(URContext context, User user)
+        {
             context.Remove(user);
             if (context.SaveChanges() == 1)
                 return true;
@@ -58,8 +61,10 @@ namespace UnleashedRage.Database
         /// Returns true if the user given matches the one in the database, returns false otherwise
         /// If the a user with the username was not found, returns null
         /// </returns>
-        public static bool? CheckUser(URContext context, User user) {
-            try {
+        public static bool? CheckUser(URContext context, User user)
+        {
+            try
+            {
                 User OriginalUser = (from u in context.User
                                      where u.Username == user.Username
                                      select u).Single();
@@ -68,10 +73,12 @@ namespace UnleashedRage.Database
                 else
                     return false;
             }
-            catch {
+            catch
+            {
                 return null;
             }
-            finally {
+            finally
+            {
                 context.Dispose();
             }
         }
@@ -84,17 +91,28 @@ namespace UnleashedRage.Database
         /// </returns>
         public static List<User> GetAllUsers(URContext context)
         {
-            try {
-                return (from u in context.User
-                        orderby u.Username
-                        select u).ToList();
-            }
-            catch {
-                return null;
-            }
-            finally {
-                context.Dispose();
-            }
+            List<User> users = (from u in context.User
+                                select new User
+                                {
+                                    UserID = u.UserID,
+                                    Username = u.Username,
+                                    Email = u.Email,
+                                    SendEmail = (u.SendEmail == true? true : false),
+                                    CurrPage = u.CurrPage
+                                }).ToList();
+            return users;
         }
+        //try {
+        //    List<User> users = (from u in context.User
+        //                        select u).ToList();
+        //    return users;
+        //}
+        //catch {
+        //    List<User> noUsers = new List<User>();
+        //    return noUsers;
+        //}
+        //finally {
+        //    context.Dispose();
+        //}
     }
 }

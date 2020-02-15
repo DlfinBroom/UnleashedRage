@@ -6,9 +6,6 @@
 
 <br id="spacer" />
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -31,16 +28,25 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Username)
+                @item.Username
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
+                @item.Email
             </td>
+            @if (item.SendEmail == true)
+            {
+                <td>
+                    Yes
+                </td>
+            }
+            else
+            {
+                <td>
+                    No
+                </td>
+            }
             <td>
-                @Html.DisplayFor(modelItem => item.SendEmail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CurrPage)
+                @item.CurrPage
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.UserID">Edit</a> |
