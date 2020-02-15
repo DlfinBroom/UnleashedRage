@@ -4,25 +4,22 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<br id="spacer" />
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Username)
+                Username
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Password)
+                Email Address
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                Send Emails?
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CurrPage)
+                Current Page
             </th>
             <th></th>
         </tr>
@@ -31,16 +28,25 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Username)
+                @item.Username
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Password)
+                @item.Email
             </td>
+            @if (item.SendEmail == true)
+            {
+                <td>
+                    Yes
+                </td>
+            }
+            else
+            {
+                <td>
+                    No
+                </td>
+            }
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CurrPage)
+                @item.CurrPage
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.UserID">Edit</a> |

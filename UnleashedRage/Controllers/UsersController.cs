@@ -22,7 +22,8 @@ namespace UnleashedRage.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
-            return View(await _context.User.ToListAsync());
+            List<User> allUsers = UserDB.GetAllUsers(_context);
+            return View(allUsers);
         }
 
         // GET: Users/Details/5

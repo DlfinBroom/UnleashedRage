@@ -12,15 +12,20 @@ namespace UnleashedRage.Models
         [Key]
         public int UserID { get; set; }
 
-        [Required, MaxLength(32), MinLength(3)]
+        [Required(ErrorMessage = "Give us a unique name or something to go by")]
+        [MaxLength(32, ErrorMessage = "Shorten that up a bit, it's too long")]
+        [MinLength(3, ErrorMessage = "Needs to be a little longer then that")]
         public string Username { get; set; }
 
-        [Required, DataType(DataType.Password)]
+        [Required(ErrorMessage = "Give us a password to protect your account with"), DataType(DataType.Password)]
+        [MinLength(7, ErrorMessage = "Something longer than that")]
         public string Password { get; set; }
 
-        [Required, DataType(DataType.EmailAddress)]
+        [Required(ErrorMessage = "We need an email")] 
+        [DataType(DataType.EmailAddress, ErrorMessage = "I don't think thats an email")]
         public string Email { get; set; }
 
+        [Required]
         public bool SendEmail { get; set; }
 
         public string CurrPage { get; set; }

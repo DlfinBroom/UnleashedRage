@@ -148,7 +148,8 @@ namespace UnleashedRage.Database
                 return page;
             }
             catch {
-                return null;
+                List<ComicPage> noPages = new List<ComicPage>();
+                return noPages;
             }
             finally {
                 context.Dispose();
