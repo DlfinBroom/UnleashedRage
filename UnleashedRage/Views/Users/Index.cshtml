@@ -13,16 +13,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Username)
+                Username
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Password)
+                Email Address
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                Send Emails?
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CurrPage)
+                Current Page
             </th>
             <th></th>
         </tr>
@@ -34,10 +34,10 @@
                 @Html.DisplayFor(modelItem => item.Username)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Password)
+                @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
+                @Html.DisplayFor(modelItem => item.SendEmail)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CurrPage)

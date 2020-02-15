@@ -75,5 +75,26 @@ namespace UnleashedRage.Database
                 context.Dispose();
             }
         }
+
+        /// <summary>
+        /// Grabs a list of all of the users in the database
+        /// </summary>
+        /// <returns>
+        /// Returns null if any kind of error occures
+        /// </returns>
+        public static List<User> GetAllUsers(URContext context)
+        {
+            try {
+                return (from u in context.User
+                        orderby u.Username
+                        select u).ToList();
+            }
+            catch {
+                return null;
+            }
+            finally {
+                context.Dispose();
+            }
+        }
     }
 }
