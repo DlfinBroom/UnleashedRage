@@ -30,7 +30,7 @@
     <!-- Comic Archive -->
     <div id="Archive" class="sidebar">
         <a href="javascript:void(0)" id="ArchiveClose" class="closebtn" onclick="closeNav()"> < </a>
-        @{int currentVolume = -1;
+        @*@{int currentVolume = -1;
         for (int a = 0; a < ViewBag.AllPages.Count; a++)
         {
             ComicPage currentPage = ViewBag.AllPages[a];
@@ -39,11 +39,25 @@
                 <h4>Volume @currentPage.Volume</h4>
                 currentVolume = currentPage.Volume;
             }
-            <a href="javascript:void(0)" onclick="changeImage(@currentPage.Image)">Issue @currentPage.Issue</a>
+            <a href="javascript:changeImage(@ViewBag.AllPages[a].Image)">Issue @currentPage.Issue</a>
         }
-        }
+        }*@
     </div>
     <script>
+        function createArchiveLink(comicPage) {
+            var link = document.createElement('a');
+            link.text = comicPage
+            //link.onclick = function (comicPage) {
+
+            //    // Convert page into an image src
+            //    var base64 = btoa(String.fromCharCode.apply(null, new Uint8Array(comicPage.Image)));
+
+            //    // Set CurrentPage src to page image src
+            //    document.getElementById("CurrentPage").src = "data:image/jpeg;base64," + base64;
+            //}
+            document.getElementById("Archive").appendChild(link);
+        }
+
         function openNav() {
             document.getElementById("Archive").style.width = "50vh";
             document.getElementById("ArchiveOpen").style.visibility = "hidden"
@@ -54,13 +68,8 @@
             document.getElementById("ArchiveOpen").style.visibility = "visible"
         }
 
-        function changeImage(pageImage) {
-
-            // Convert page into an image src
-            var base64 = btoa(String.fromCharCode.apply(null, new Uint8Array(pageImage)));
-
-            // Set CurrentPage src to page image src
-            document.getElementById("CurrentPage").src = "data:image/jpeg;base64," + base64;
+        for (var a = 0; a < 5; a++) {
+            createArchiveLink(a);
         }
     </script>
     <br />
