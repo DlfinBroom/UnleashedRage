@@ -68,7 +68,8 @@
             document.getElementById("ArchiveOpen").style.visibility = "visible"
         }
 
-        for (var a = 0; a < 5; a++) {
+        //var AllPages = @ViewBag.AllPages;
+        for (var a = 0; a < @ViewBag.AllPages.Count; a++) {
             createArchiveLink(a);
         }
     </script>
