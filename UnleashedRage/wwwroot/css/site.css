@@ -1,6 +1,10 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
+﻿/* Spaces the views so the global nav fits at the top */
+#spacer {
+    font-size: 8vh;
+}
 
+/* Links to all views on all pages*/
+/*#region GlobalNav*/
 #Navbar {
     position: fixed;
     width: 100%;
@@ -12,41 +16,16 @@ for details on configuring this project to bundle and minify static web assets. 
 #Navbar a {
     background-color: white;
 }
-@media screen and (max-width: 768px) {
-    #Navbar a {
-        padding-left: 10px;
-        margin-left: 10px;
-        margin-right: 10px;
-        align-content: center;
-    }
-}
 
 a.navbar-brand {
     white-space: normal;
     text-align: center;
     font-size: 32px;
 }
+/*#endregion*/
 
-#spacer {
-    font-size: 8vh;
-}
-@media (min-width: 768){
-    #spacer{
-        font-size: 100px;
-    }
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  font-size: 14px;
-}
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
+/* The image viewer */
+/*#region ComicPageViewer*/
 #PageView {
     height: 85vh;
     overflow-x: visible;
@@ -54,58 +33,15 @@ html {
     margin-left: auto;
     margin-right: auto;
 }
-@media screen and (min-width: 1000px) {
-    #PageView{
-        max-width: 60vw;
-    }
-}
 
 #CurrentPage {
     align-content: center;
     width: 100%;
 }
+/*#endregion*/
 
-.border-top {
-  border-top: 1px solid #e5e5e5;
-}
-.border-bottom {
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
-
-button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
-}
-
-#ArchiveButtons{
-    width: 100px;
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  /* Margin bottom by footer height */
-}
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  /* Set the fixed height of the footer here */
-  height: 60px;
-  line-height: 60px; /* Vertically center the text there */
-}
-
-/* The sidebar menu */
+/* Links to all comic pages*/
+/*#region Archive*/
 .sidebar {
     width: 0; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
@@ -125,7 +61,6 @@ body {
     border-radius: 0px 12px 12px 0px;
 }
 
-/* The sidebar links */
 .sidebar a {
     margin: 10px 20px;
     text-decoration: none;
@@ -144,12 +79,10 @@ body {
     transition: 0.3s;
 }
 
-/* When you mouse over the navigation links, change their color */
 .sidebar a:hover {
     color: #f1f1f1;
 }
 
-/* Position and style the close button (top right corner) */
 .sidebar .closebtn {
     position: absolute;
     top: 0;
@@ -158,7 +91,6 @@ body {
     margin-left: 50px;
 }
 
-/* The button used to open the sidebar */
 .openbtn {
     font-size: 20px;
     cursor: pointer;
@@ -174,19 +106,41 @@ body {
     background-color: #444;
 }
 
-/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #ArchiveOpen {
-    transition: margin-left .5s; /* If you want a transition effect */
+    transition: margin-left .5s;
     padding-top: 0;
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Stay on top */
+    position: fixed;
+    z-index: 1;
     left: 0;
 }
 
-#ArchiveClose{
+#ArchiveButtons {
+    width: 100px;
+}
+/*#endregion*/
 
+/* Web Store */
+/*#region Merch*/
+#Merch {
+    background-color: azure;
+    padding: 10px 10px .1px 10px;
 }
 
+#Merch button {
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+    float: left;
+    display: inline;
+}
+
+#MerchText {
+    height: 100px;
+}
+/*#endregion*/
+
+/* Author Bio*/
+/*#region AuthorBio*/
 #AuthorBio {
     background-color: beige;
     padding-bottom: 5px;
@@ -206,66 +160,112 @@ body {
     margin: 10px;
 }
 
-#AuthorLinks{
+#AuthorLinks {
     margin-left: 10px;
 }
-#AuthorLinks a{
+
+#AuthorLinks a {
     text-wrap: avoid;
 }
 
-#Media2, #Media4{
+#Media2, #Media4 {
     float: right;
     display: inline;
     width: 55vw;
 }
+/*#endregion*/
 
-#Merch{
-    background-color: azure;
-    padding: 10px 10px .1px 10px;
-}
-#Merch button {
-    width: 100px;
-    height: 100px;
-    margin-right: 10px;
-    float: left;
-    display: inline;
+/* Main HTML elements */
+/*#region BodyAndFooter*/
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
-#MerchText {
-    height: 100px;
+body {
+    /* Margin bottom by footer height */
 }
 
-/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    height: 60px;
+    line-height: 60px; /* Vertically center the text there */
+}
+/*#endregion*/
+
+/* Only on desktop */
+@media screen and (min-width: 1000px) {
+    #spacer {
+        font-size: 100px;
+    }
+
+    html {
+        font-size: 16px;
+    }
+
+    #PageView {
+        max-width: 60vw;
+    }
+}
+
+/* Only on mobile */
 @media screen and (max-width: 768px) {
+
+    /* Global Nav */
+    #Navbar a {
+        padding-left: 10px;
+        margin-left: 10px;
+        margin-right: 10px;
+        align-content: center;
+    }
+
+    /* Comic Archive */
     .sidebar {
         max-width: 35vw;
     }
-
     .sidebar a {
         font-size: 18px;
     }
-
     .sizebar h4 {
         font-size: 20px;
     }
 
+    /* Author Bio */
     #AuthorBio {
     }
-
     #AuthorImage {
         width: 22vw;
         height: 22vw;
     }
-
     #AuthorDesc {
         font-size: small;
     }
 
+    /* Merch */
     #Merch button{
         width: 20vw;
         height: 20vw;
     }
-
     #MerchText{
         height: 20vw;
     }
