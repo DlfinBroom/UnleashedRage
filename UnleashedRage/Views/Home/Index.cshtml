@@ -43,18 +43,17 @@
         }
         }*@
     </div>
-    <script>
-        function createArchiveLink(comicPage) {
+    <script>      
+        function createArchiveLink(issue, image) {
             var link = document.createElement('a');
-            link.text = comicPage
-            //link.onclick = function (comicPage) {
+            link.text = "Issue " + issue;
+            link.onclick = function (image) {
 
-            //    // Convert page into an image src
-            //    var base64 = btoa(String.fromCharCode.apply(null, new Uint8Array(comicPage.Image)));
+                // Convert page into an image src
 
-            //    // Set CurrentPage src to page image src
-            //    document.getElementById("CurrentPage").src = "data:image/jpeg;base64," + base64;
-            //}
+                // Set CurrentPage src to page image src
+                document.getElementById("CurrentPage").src = "data:image/jpeg;base64," + base64;
+            }
             document.getElementById("Archive").appendChild(link);
         }
 
@@ -68,10 +67,26 @@
             document.getElementById("ArchiveOpen").style.visibility = "visible"
         }
 
-        //var AllPages = @ViewBag.AllPages;
+        @{int i = 0; };
         for (var a = 0; a < @ViewBag.AllPages.Count; a++) {
-            createArchiveLink(a);
+            @{i++; };
+            var issue = @ViewBag.AllPages[i].Issue;
+            var image = "data:image/jpeg;base64,"
+                // + btoa(String.fromCharCode.apply(null, new Uint8Array(@ViewBag.AllPages[i].Image)));
+                + arrayBufferToBase64(@ViewBag.AllPages[i].Image);
+            createArchiveLink(issue, image);
         }
+
+        function arrayBufferToBase64( buffer ) {
+            var binary = '';
+            var bytes = new Uint8Array( buffer );
+            var len = bytes.byteLength;
+            for (var i = 0; i < len; i++) {
+                binary += String.fromCharCode( bytes[ i ] );
+            }
+            return window.btoa( binary );
+        }
+
     </script>
     <br />
 
