@@ -155,5 +155,49 @@ namespace UnleashedRage.Database
                 context.Dispose();
             }
         }
+
+        /// <summary>
+        /// Returns a list of all of the volumes and issues of each page
+        /// as a string with a space inbetween.
+        /// Returns an empty list if an error occures
+        /// </summary>
+        public static List<string> GetAllPageNumbers(URContext context)
+        {
+            try {
+                List<string> allPages = (from c in context.ComicPage
+                                         orderby c.Volume, c.Issue
+                                         select c.Volume + " " + c.Issue).ToList<string>();
+                return allPages;
+            }
+            catch {
+                List<string> noPages = new List<string>();
+                return noPages;
+            }
+            finally {
+                context.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Returns the byte array of the image of the comic page 
+        /// with the same volume or issue given.
+        /// Returns an empty list if an error occures while trying
+        /// </summary>
+        public static byte[] GetPageImage(URContext context, int volume, int issue)
+        {
+            try {
+                byte[] image = (from c in context.ComicPage
+                                where c.Volume == volume && c.Issue == issue
+                                select c.Image).Single();
+                return image;
+            }
+            catch {
+                byte[] noImage = { 0 };
+                return noImage;
+            }
+            finally {
+                context.Dispose();
+            }
+        }
     }
 }
