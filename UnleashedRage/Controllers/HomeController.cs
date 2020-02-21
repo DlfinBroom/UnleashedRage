@@ -19,14 +19,12 @@ namespace UnleashedRage.Controllers {
         public IActionResult Index()
         {
             // Get all issues
-            List<ComicPage> allIssues = ComicPageDB.GetAllPages(_context);
-            ViewBag.AllPages = allIssues;
+            ComicPage latestIssue = ComicPageDB.GetLatestPage(_context);
+            ViewBag.CurrentPage = latestIssue;
 
-            // Get and sent latest issue
-            if (allIssues.Any())
-            {
-                ViewBag.CurrentPage = allIssues[allIssues.Count - 1];
-            }
+            // Gat all page nums
+            List<string> pageNums = ComicPageDB.GetAllPageNumbers(_context);
+            ViewBag.PageNums = pageNums;
             return View();
         }
 

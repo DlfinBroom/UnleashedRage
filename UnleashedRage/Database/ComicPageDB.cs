@@ -78,17 +78,14 @@ namespace UnleashedRage.Database
             try
             {
                 ComicPage page = (from c in context.ComicPage
-                                  orderby c.ReleaseDate
-                                  select c).Single();
+                                  orderby c.Volume, c.Issue
+                                  select c).Last();
                 return page;
             }
             catch
             {
-                return null;
-            }
-            finally
-            {
-                context.Dispose();
+                ComicPage noPage = new ComicPage();
+                return noPage;
             }
         }
 
@@ -108,9 +105,6 @@ namespace UnleashedRage.Database
             catch {
                 return null;
             }
-            finally {
-                context.Dispose();
-            }
         }
 
         /// <summary>
@@ -128,9 +122,6 @@ namespace UnleashedRage.Database
             }
             catch {
                 return null;
-            }
-            finally {
-                context.Dispose();
             }
         }
 
@@ -151,9 +142,6 @@ namespace UnleashedRage.Database
                 List<ComicPage> noPages = new List<ComicPage>();
                 return noPages;
             }
-            finally {
-                context.Dispose();
-            }
         }
 
         /// <summary>
@@ -163,19 +151,23 @@ namespace UnleashedRage.Database
         /// </summary>
         public static List<string> GetAllPageNumbers(URContext context)
         {
-            try {
-                List<string> allPages = (from c in context.ComicPage
-                                         orderby c.Volume, c.Issue
-                                         select c.Volume + " " + c.Issue).ToList<string>();
-                return allPages;
-            }
-            catch {
-                List<string> noPages = new List<string>();
-                return noPages;
-            }
-            finally {
-                context.Dispose();
-            }
+            List<string> allPages = (from c in context.ComicPage
+                                     orderby c.Volume, c.Issue
+                                     select ("" + c.Volume + " " + c.Issue)).ToList<string>();
+            return allPages;
+            //try {
+            //    List<string> allPages = (from c in context.ComicPage
+            //                             orderby c.Volume, c.Issue
+            //                             select c.Volume + " " + c.Issue).ToList<string>();
+            //    return allPages;
+            //}
+            //catch {
+            //    List<string> noPages = new List<string>();
+            //    return noPages;
+            //}
+            //finally {
+            //    context.Dispose();
+            //}
         }
 
         /// <summary>
@@ -194,9 +186,6 @@ namespace UnleashedRage.Database
             catch {
                 byte[] noImage = { 0 };
                 return noImage;
-            }
-            finally {
-                context.Dispose();
             }
         }
     }
