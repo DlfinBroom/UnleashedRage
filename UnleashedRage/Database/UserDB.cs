@@ -65,21 +65,14 @@ namespace UnleashedRage.Database
         {
             try
             {
-                User OriginalUser = (from u in context.User
-                                     where u.Username == user.Username
-                                     select u).Single();
-                if (OriginalUser.Password == user.Password)
-                    return true;
-                else
-                    return false;
+                string password = (from u in context.User
+                                   where u.Username == user.Username
+                                   select u.Password).Single();
+                return password == user.Password;
             }
             catch
             {
                 return null;
-            }
-            finally
-            {
-                context.Dispose();
             }
         }
 

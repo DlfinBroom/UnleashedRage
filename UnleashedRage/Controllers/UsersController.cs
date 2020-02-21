@@ -84,8 +84,15 @@ namespace UnleashedRage.Controllers
                     ViewBag.Welcome = "Welcome back " + user.Username;
                     return RedirectToAction("Index", "Home");
                 }
+                else if(rightUser == false)
+                {
+                    ViewBag.Error = "Username or Password is incorect";
+                }
+                else
+                {
+                    ViewBag.Error = "An Error occured, try again later";
+                }
             }
-            ViewBag.Error = "Username or Password is incorect";
             return View(user);
         }
         #endregion
