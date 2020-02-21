@@ -30,63 +30,28 @@
     <!-- Comic Archive -->
     <div id="Archive" class="sidebar">
         <a href="javascript:void(0)" id="ArchiveClose" class="closebtn" onclick="closeNav()"> < </a>
-        @*@{int currentVolume = -1;
-        for (int a = 0; a < ViewBag.AllPages.Count; a++)
-        {
-            ComicPage currentPage = ViewBag.AllPages[a];
-            if (currentPage.Volume != currentVolume)
-            {
-                <h4>Volume @currentPage.Volume</h4>
-                currentVolume = currentPage.Volume;
-            }
-            <a href="javascript:changeImage(@ViewBag.AllPages[a].Image)">Issue @currentPage.Issue</a>
-        }
-        }*@
     </div>
-    <script>      
-        function createArchiveLink(issue, image) {
+    <script> 
+        function createArchiveLink(pageNum) {
             var link = document.createElement('a');
-            link.text = "Issue " + issue;
-            link.onclick = function (image) {
+            link.text = pageNum;
+            //link.onclick = function (image) {
 
-                // Convert page into an image src
+            //    // Convert page into an image src
 
-                // Set CurrentPage src to page image src
-                document.getElementById("CurrentPage").src = "data:image/jpeg;base64," + base64;
-            }
+            //    // Set CurrentPage src to page image src
+            //    document.getElementById("CurrentPage").src = "data:image/jpeg;base64," + base64;
+            //}
             document.getElementById("Archive").appendChild(link);
         }
 
-        function openNav() {
-            document.getElementById("Archive").style.width = "50vh";
-            document.getElementById("ArchiveOpen").style.visibility = "hidden"
+        @*for (page in @ViewBag.PageNums) {
+            createArchiveLink(page);
+        }*@
+        while (@ViewBag.PageNums.Count > 0) {
+            createArchiveLink(@ViewBag.PageNums[0]);
+            @ViewBag.PageNums.Remove(ViewBag.PageNums[0]);
         }
-
-        function closeNav() {
-            document.getElementById("Archive").style.width = "0";
-            document.getElementById("ArchiveOpen").style.visibility = "visible"
-        }
-
-        @{int i = 0; };
-        for (var a = 0; a < @ViewBag.AllPages.Count; a++) {
-            @{i++; };
-            var issue = @ViewBag.AllPages[i].Issue;
-            var image = "data:image/jpeg;base64,"
-                // + btoa(String.fromCharCode.apply(null, new Uint8Array(@ViewBag.AllPages[i].Image)));
-                + arrayBufferToBase64(@ViewBag.AllPages[i].Image);
-            createArchiveLink(issue, image);
-        }
-
-        function arrayBufferToBase64( buffer ) {
-            var binary = '';
-            var bytes = new Uint8Array( buffer );
-            var len = bytes.byteLength;
-            for (var i = 0; i < len; i++) {
-                binary += String.fromCharCode( bytes[ i ] );
-            }
-            return window.btoa( binary );
-        }
-
     </script>
     <br />
 
@@ -120,7 +85,6 @@
             <a href="#" id="Media3">Social Media link 3</a>
             <a href="#" id="Media4">Social Media link 4</a>
         </div>
-
     </div>
     <br /><br /><br />
 </body>
