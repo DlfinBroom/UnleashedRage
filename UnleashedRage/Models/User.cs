@@ -31,16 +31,8 @@ namespace UnleashedRage.Models
         public string CurrPage { get; set; }
 
         public User() {
-            Username = "User";
-            Password = "12345";
-            Email = "Email@email.com";
-            CurrPage = "";
-        }
-        public User(string name) {
-            Username = name;
-            Password = "12345";
-            Email = "Email@email.com";
-            CurrPage = "";
+            CurrPage = "0, 0";
+            SendEmail = false;
         }
     }
 }
