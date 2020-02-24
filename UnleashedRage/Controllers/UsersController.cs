@@ -33,9 +33,7 @@ namespace UnleashedRage.Controllers
             {
                 return NotFound();
             }
-
-            var user = await _context.User
-                .FirstOrDefaultAsync(m => m.UserID == id);
+            User user = UserDB.GetUser(_context, id);
             if (user == null)
             {
                 return NotFound();
@@ -47,18 +45,19 @@ namespace UnleashedRage.Controllers
         #region Sign Up
         public IActionResult Create()
         {
-            return View();
+            User user = new User();
+            user.SendEmail = true;
+            return View(user);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserID,Username,Password,Email,CurrPage")] User user)
+        //[Bind("UserID,Username,Password,Email,CurrPage")] 
+        public async Task<IActionResult> Create(User user)
         {
-            user.CurrPage = "0; 0";
             if (ModelState.IsValid)
             {
-                _context.Add(user);
-                await _context.SaveChangesAsync();
+                user = UserDB.AddUser(_context, user);
                 ViewBag.Welcome = "Welcome " + user.Username;
                 return RedirectToAction("Index", "Home");
             }
@@ -79,12 +78,12 @@ namespace UnleashedRage.Controllers
             if (user.Username != null && user.Password != null)
             {
                 bool? rightUser = UserDB.CheckUser(_context, user);
-                if(rightUser == true)
+                if (rightUser == true)
                 {
                     ViewBag.Welcome = "Welcome back " + user.Username;
                     return RedirectToAction("Index", "Home");
                 }
-                else if(rightUser == false)
+                else if (rightUser == false)
                 {
                     ViewBag.Error = "Username or Password is incorect";
                 }
@@ -97,85 +96,30 @@ namespace UnleashedRage.Controllers
         }
         #endregion
 
-        // GET: Users/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var user = await _context.User.FindAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-            return View(user);
-        }
-
-        // POST: Users/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserID,Username,Password,Email,CurrPage")] User user)
-        {
-            if (id != user.UserID)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(user.UserID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(user);
-        }
-
-        // GET: Users/Delete/5
+        #region Delete
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var user = await _context.User
-                .FirstOrDefaultAsync(m => m.UserID == id);
+            User user = UserDB.GetUser(_context, id);
             if (user == null)
             {
                 return NotFound();
             }
-
             return View(user);
         }
-
-        // POST: Users/Delete/5
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var user = await _context.User.FindAsync(id);
-            _context.User.Remove(user);
-            await _context.SaveChangesAsync();
+            User user = UserDB.GetUser(_context, id);
+            UserDB.DeleteUser(_context, user);
             return RedirectToAction(nameof(Index));
         }
+        #endregion
 
         private bool UserExists(int id)
         {
