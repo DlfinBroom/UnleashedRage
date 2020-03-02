@@ -30,6 +30,28 @@ namespace UnleashedRage.Database
             }
         }
 
+        public static User GetUser(URContext context, string username)
+        {
+            try
+            {
+                return (from u in context.User
+                        where u.Username == username
+                        select new User
+                        {
+                            UserID = u.UserID,
+                            Username = u.Username,
+                            Email = u.Email,
+                            SendEmail = (u.SendEmail == true ? true : false),
+                            CurrPage = u.CurrPage
+                        }).Single();
+            }
+            catch
+            {
+                User noUserFound = new User();
+                return noUserFound;
+            }
+        }
+
         /// <summary>
         /// Adds the user given into the database
         /// </summary>
