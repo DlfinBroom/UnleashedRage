@@ -7,9 +7,13 @@
 <br id="spacer" />
 <h1>Login</h1>
 
-@if(ViewBag.Error != null)
+@if (ViewBag.Error != null)
 {
     <h4 class="text-danger">@ViewBag.Error</h4>
+}
+else if (ViewBag.Success != null)
+{
+    <h4 class="text-success">@ViewBag.Success</h4>
 }
 <hr />
 <div class="row">
@@ -31,6 +35,10 @@
                 </table>
                 <input type="submit" value="Log In" class="btn btn-primary" />
                 <input type="reset" value="Clear" class="btn btn-secondary" />
+                <br />
+                <br />
+                <label>Forget your password?</label>
+                <a class="alert-link" asp-action="ForgetPassword" asp-route-id="Login">Reset your password</a>
             </div>
         </form>
     </div>
