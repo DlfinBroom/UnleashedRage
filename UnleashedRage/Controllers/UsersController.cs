@@ -121,6 +121,25 @@ namespace UnleashedRage.Controllers
         }
         #endregion
 
+        public IActionResult ForgetPassword()
+        {
+            User user = new User();
+            return View(user);
+        }
+        [HttpPost]
+        public IActionResult ForgetPassword(User account)
+        {
+            User originalAccount = UserDB.GetUser(_context, account.Username);
+            string email = originalAccount.Email;
+            if (!string.IsNullOrEmpty(email))
+            {
+                // Send an email to change that users password
+                ViewBag.Success = "An email was sent to change the password of this account";
+                return RedirectToAction("Login", "Users");
+            }
+            ViewBag.Error = "Username was not found, was it spelled right?";
+            return View(account);
+        }
         private bool UserExists(int id)
         {
             return _context.User.Any(e => e.UserID == id);
