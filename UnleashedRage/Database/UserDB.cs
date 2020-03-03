@@ -52,6 +52,21 @@ namespace UnleashedRage.Database
             }
         }
 
+        public static List<string> GetAllEmails(URContext context)
+        {
+            try
+            {
+                return (from u in context.User
+                        where u.SendEmail == true
+                        select u.Email).ToList<string>();
+            }
+            catch
+            {
+                List<string> noEmails = new List<string>();
+                return noEmails;
+            }
+        }
+
         /// <summary>
         /// Adds the user given into the database
         /// </summary>

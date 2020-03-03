@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using UnleashedRage.Models;
+using System.Net.Mail;
+using System.Net;
 
 namespace UnleashedRage.Database {
     public class PagesController : Controller {
@@ -34,7 +36,8 @@ namespace UnleashedRage.Database {
         #region Create
         [HttpGet]
         public IActionResult Create() {
-            return View();
+            InputComicPage page = new InputComicPage();
+            return View(page);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -64,16 +67,47 @@ namespace UnleashedRage.Database {
                 // Tries to add the page to the database, and displays a message if it worked or not
                 bool? pageAdded = ComicPageDB.AddPage(_context, page);
                 if (pageAdded == true)
-                    ViewData["Message"] = page.ToString() + " was added!";
+                    ViewBag.Message = page.ToString() + " was added!";
                 else if (pageAdded == null)
-                    ViewData["ErrorMessage"] = input.ToString() + " already exists, edit that page or make a new one";
+                    ViewBag.Error = input.ToString() + " already exists, edit that page or make a new one";
                 else
-                    ViewData["ErrorMessage"] = "An error occured, try again later";
+                    ViewBag.Error = "An error occured, try again later";
+
+                if (input.SendEmail == true)
+                {
+                    SendPageUpdateEmail(input);
+                }
 
                 return View();
             }
             ViewData["ErrorMessage"] = "An error occured, try again later";
             return View();
+        }
+
+        private void SendPageUpdateEmail(InputComicPage input)
+        {
+            List<string> emails = UserDB.GetAllEmails(_context);
+            if (emails.Count == 0)
+            {
+                ViewBag.EmailFail = "No Email addresses were found to send to";
+                return;
+            }
+            MailMessage message = new MailMessage
+            {
+                IsBodyHtml = true,
+                Body = "text",
+                Subject = "subject"
+            };
+            message.From = new MailAddress("sender@email.com");
+            foreach (string email in emails)
+            {
+                message.To.Add(email);
+            }
+            SmtpClient client = new SmtpClient("email sending service", 465)
+            {
+                Credentials = new NetworkCredential("sending email address", "password"),
+                EnableSsl = true
+            };
         }
         #endregion
 
