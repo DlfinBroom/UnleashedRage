@@ -1,4 +1,4 @@
-﻿@model UnleashedRage.Models.User
+﻿@model UnleashedRage.Models.InputUser
 
 @{
     ViewData["Title"] = "Create";
@@ -6,6 +6,10 @@
 
 <br id="spacer" />
 <h1>Sign Up</h1>
+@if(ViewBag.Error != null)
+{
+    <h4 class="text-danger">@ViewBag.Error</h4>
+}
 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 <form asp-action="Create">
@@ -21,23 +25,37 @@
                 <tr></tr>
                 <tr>
                     <td><label asp-for="Username" class="control-label"></label></td>
-                    <td><input asp-for="Username" class="form-control" />
-                        <span asp-validation-for="Username" class="text-danger"></span></td>
+                    <td>
+                        <input asp-for="Username" class="form-control" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </td>
                 </tr>
                 <tr>
                     <td><label asp-for="Password" class="control-label"></label></td>
-                    <td><input asp-for="Password" class="form-control" />
-                        <span asp-validation-for="Password" class="text-danger"></span></td>
+                    <td>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label asp-for="CheckPassword" class="control-label">Confirm Password</label></td>
+                    <td>
+                        <input asp-for="CheckPassword" class="form-control" />
+                        <span asp-validation-for="CheckPassword" class="text-danger"></span>
+                    </td>
                 </tr>
                 <tr>
                     <td><label asp-for="Email" class="control-label">Email Address</label></td>
-                    <td><input asp-for="Email" class="form-control" />
-                        <span asp-validation-for="Email" class="text-danger"></span></td>
+                    <td>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </td>
                 </tr>
                 <tr>
                     <td><input asp-for="SendEmail" class="form-control" /></td>
-                    <td><label asp-for="SendEmail" class="control-label"
-                        >I would you like to receive email notifications about new comic pages released</label></td>
+                    <td>
+                        <label asp-for="SendEmail" class="control-label">I would you like to receive email notifications about new comic pages released</label>
+                    </td>
                 </tr>
             </tbody>
         </table>
