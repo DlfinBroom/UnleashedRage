@@ -45,7 +45,7 @@ namespace UnleashedRage.Controllers
         #region Sign Up
         public IActionResult Create()
         {
-            User user = new User();
+            InputUser user = new InputUser();
             user.SendEmail = true;
             return View(user);
         }
@@ -53,15 +53,26 @@ namespace UnleashedRage.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Bind("UserID,Username,Password,Email,CurrPage")] 
-        public async Task<IActionResult> Create(User user)
+        public async Task<IActionResult> Create(InputUser input)
         {
             if (ModelState.IsValid)
             {
-                user = UserDB.AddUser(_context, user);
-                ViewBag.Welcome = "Welcome " + user.Username;
-                return RedirectToAction("Index", "Home");
+                if (input.Password == input.CheckPassword)
+                {
+                    User user = new User(
+                        input.Username,
+                        input.Email,
+                        input.SendEmail
+                    );
+                    // Hash the password before entering it
+                    user.Password = input.Password;
+                    user = UserDB.AddUser(_context, user);
+                    ViewBag.Welcome = "Welcome " + user.Username;
+                    return RedirectToAction("Index", "Home");
+                }
+                ViewBag.Error = "Passwords must match";
             }
-            return View(user);
+            return View(input);
         }
         #endregion
 
