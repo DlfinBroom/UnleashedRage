@@ -105,7 +105,7 @@ namespace UnleashedRage.Database {
             }
             SmtpClient client = new SmtpClient("email sending service", 465)
             {
-                Credentials = new NetworkCredential("sending email address", "password"),
+                Credentials = new NetworkCredential("dumbdingostudios@gmail.com", "alina0422"),
                 EnableSsl = true
             };
         }
