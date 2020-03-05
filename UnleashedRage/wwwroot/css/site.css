@@ -282,4 +282,10 @@ button.accept-policy {
     #MerchText{
         height: 20vw;
     }
+
+    /* Table Items */
+    #Table {
+        align-self: center;
+        width: 90vw;
+    }
 }
