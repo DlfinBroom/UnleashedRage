@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace UnleashedRage.Models
 {
-    public class User
+    public class InputUser
     {
-        
-        [Key]
-        public int UserID { get; set; }
-
         [Required(ErrorMessage = "Give us a unique name or something to go by")]
         [MaxLength(32, ErrorMessage = "Shorten that up a bit, it's too long")]
         [MinLength(3, ErrorMessage = "Needs to be a little longer then that")]
@@ -21,25 +17,20 @@ namespace UnleashedRage.Models
         [MinLength(7, ErrorMessage = "Something longer than that")]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "We need an email")] 
+        [Required(ErrorMessage = "Make sure your passwords match"), DataType(DataType.Password)]
+        [MinLength(7, ErrorMessage = "Make sure your passwords match")]
+        public string CheckPassword { get; set; }
+
+        [Required(ErrorMessage = "We need an email")]
         [DataType(DataType.EmailAddress, ErrorMessage = "I don't think thats an email")]
         public string Email { get; set; }
 
         [Required]
         public bool SendEmail { get; set; }
 
-        public string CurrPage { get; set; }
-
-        public User() {
-            CurrPage = "0, 0";
-            SendEmail = false;
-        }
-        public User(string username, string email, bool sendEmail)
+        public InputUser()
         {
-            Username = username;
-            Email = email;
-            SendEmail = sendEmail;
-            CurrPage = "0, 0";
+            SendEmail = false;
         }
     }
 }
