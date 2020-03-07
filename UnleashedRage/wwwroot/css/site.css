@@ -24,6 +24,23 @@ a.navbar-brand {
 }
 /*#endregion*/
 
+/* Create Tables */
+/*#region Tables*/
+#Table{
+    align-self: center;
+    width: 40vw;
+}
+#Labels {
+    font-size: 20px;
+    width: 20%;
+}
+#Inputs {
+    text-align: center;
+    align-content: center;
+    width: 35%;
+}
+/*#endregion*/
+
 /* The image viewer */
 /*#region ComicPageViewer*/
 #PageView {
@@ -215,10 +232,6 @@ button.accept-policy {
 
 /* Only on desktop */
 @media screen and (min-width: 1000px) {
-    #spacer {
-        font-size: 100px;
-    }
-
     html {
         font-size: 16px;
     }
@@ -268,5 +281,11 @@ button.accept-policy {
     }
     #MerchText{
         height: 20vw;
+    }
+
+    /* Table Items */
+    #Table {
+        align-self: center;
+        width: 90vw;
     }
 }

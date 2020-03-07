@@ -6,21 +6,78 @@ using UnleashedRage.Models;
 
 namespace UnleashedRage.Database
 {
-    public class UserDB
+    public static class UserDB
     {
+        public static User GetUser(URContext context, int? id)
+        {
+            try
+            {
+                return (from u in context.User
+                        where u.UserID == id
+                        select new User
+                        {
+                            UserID = u.UserID,
+                            Username = u.Username,
+                            Email = u.Email,
+                            SendEmail = (u.SendEmail == true ? true : false),
+                            CurrPage = u.CurrPage
+                        }).Single();
+            }
+            catch
+            {
+                User noUserFound = new User();
+                return noUserFound;
+            }
+        }
+
+        public static User GetUser(URContext context, string username)
+        {
+            try
+            {
+                return (from u in context.User
+                        where u.Username == username
+                        select new User
+                        {
+                            UserID = u.UserID,
+                            Username = u.Username,
+                            Email = u.Email,
+                            SendEmail = (u.SendEmail == true ? true : false),
+                            CurrPage = u.CurrPage
+                        }).Single();
+            }
+            catch
+            {
+                User noUserFound = new User();
+                return noUserFound;
+            }
+        }
+
+        public static List<string> GetAllEmails(URContext context)
+        {
+            try
+            {
+                return (from u in context.User
+                        where u.SendEmail == true
+                        select u.Email).ToList<string>();
+            }
+            catch
+            {
+                List<string> noEmails = new List<string>();
+                return noEmails;
+            }
+        }
+
         /// <summary>
         /// Adds the user given into the database
         /// </summary>
         /// <returns>
         /// Returns true if only one user was affected, returns false otherwise
         /// </returns>
-        public static bool AddUser(URContext context, User user)
+        public static User AddUser(URContext context, User user)
         {
             context.Add(user);
-            if (context.SaveChanges() == 1)
-                return true;
-            else
-                return false;
+            context.SaveChanges();
+            return user;
         }
 
         /// <summary>
@@ -29,13 +86,11 @@ namespace UnleashedRage.Database
         /// <returns>
         /// Returns true if only one user was affected, returns false otherwise
         /// </returns>
-        public static bool UpdateUser(URContext context, User user)
+        public static User UpdateUser(URContext context, User user)
         {
             context.Update(user);
-            if (context.SaveChanges() == 1)
-                return true;
-            else
-                return false;
+            context.SaveChanges();
+            return user;
         }
 
         /// <summary>
@@ -44,14 +99,11 @@ namespace UnleashedRage.Database
         /// <returns>
         /// Returns true if only one user was affected, returns false otherwise
         /// </returns>
-        public static bool DeleteUser(URContext context, User user)
+        public static User DeleteUser(URContext context, User user)
         {
             context.Remove(user);
-            if (context.SaveChanges() == 1)
-                return true;
-            else
-                return false;
-
+            context.SaveChanges();
+            return user;
         }
 
         /// <summary>
@@ -65,21 +117,14 @@ namespace UnleashedRage.Database
         {
             try
             {
-                User OriginalUser = (from u in context.User
-                                     where u.Username == user.Username
-                                     select u).Single();
-                if (OriginalUser.Password == user.Password)
-                    return true;
-                else
-                    return false;
+                string password = (from u in context.User
+                                   where u.Username == user.Username
+                                   select u.Password).Single();
+                return password == user.Password;
             }
             catch
             {
                 return null;
-            }
-            finally
-            {
-                context.Dispose();
             }
         }
 
@@ -91,28 +136,16 @@ namespace UnleashedRage.Database
         /// </returns>
         public static List<User> GetAllUsers(URContext context)
         {
-            List<User> users = (from u in context.User
-                                select new User
-                                {
-                                    UserID = u.UserID,
-                                    Username = u.Username,
-                                    Email = u.Email,
-                                    SendEmail = (u.SendEmail == true? true : false),
-                                    CurrPage = u.CurrPage
-                                }).ToList();
-            return users;
+            return (from u in context.User
+                    orderby u.Username
+                    select new User
+                    {
+                        UserID = u.UserID,
+                        Username = u.Username,
+                        Email = u.Email,
+                        SendEmail = (u.SendEmail == true? true : false),
+                        CurrPage = u.CurrPage
+                    }).ToList();
         }
-        //try {
-        //    List<User> users = (from u in context.User
-        //                        select u).ToList();
-        //    return users;
-        //}
-        //catch {
-        //    List<User> noUsers = new List<User>();
-        //    return noUsers;
-        //}
-        //finally {
-        //    context.Dispose();
-        //}
     }
 }

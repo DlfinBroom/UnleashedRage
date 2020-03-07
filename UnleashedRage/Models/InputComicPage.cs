@@ -17,6 +17,13 @@ namespace UnleashedRage.Models
 
         [Required(ErrorMessage = "File is required")]
         [DataType(DataType.Upload)]
+
+        public bool SendEmail { get; set; }
         public IFormFile Image { get; set; }
+
+        public InputComicPage()
+        {
+            SendEmail = true;
+        }
     }
 }

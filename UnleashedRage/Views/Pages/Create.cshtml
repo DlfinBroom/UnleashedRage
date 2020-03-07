@@ -36,6 +36,11 @@
                     <span asp-validation-for="Issue" class="text-danger"></span>
                 </div>
                 <div class="form-group">
+                    <label asp-for="SendEmail" class="control-label"></label>
+                    <input asp-for="SendEmail" class="form-control" />
+                    <span asp-validation-for="SendEmail" class="text-danger"></span>
+                </div>
+                <div class="form-group">
                     <input type="submit" value="Create" class="btn btn-primary" />
                 </div>
             </form>

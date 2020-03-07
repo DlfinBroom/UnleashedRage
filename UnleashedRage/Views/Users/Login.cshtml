@@ -7,29 +7,45 @@
 <br id="spacer" />
 <h1>Login</h1>
 
-@if(ViewBag.Error != null)
+@if (ViewBag.Error != null)
 {
     <h4 class="text-danger">@ViewBag.Error</h4>
 }
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Login">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+else if (ViewBag.Success != null)
+{
+    <h4 class="text-success">@ViewBag.Success</h4>
+}
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<form asp-action="Login">
+    <div id="Login">       
+        <table class="table" id="Table">
+            <thead>
+                <tr>
+                    <th id="Labels"></th>
+                    <th id="Inputs"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><label asp-for="Username" class="control-label"></label></td>
+                    <td><input asp-for="Username" class="form-control" /></td>
+                </tr>
+                <tr>
+                    <td><label asp-for="Password" class="control-label"></label></td>
+                    <td><input asp-for="Password" class="form-control" /></td>
+                </tr>
+                <tr></tr>
+            </tbody>
+        </table>
+        <input type="submit" value="Log In" class="btn btn-primary" />
+        <input type="reset" value="Clear" class="btn btn-secondary" />
+        <br />
+        <br />
+        <label>Forget your password?</label>
+        <a class="alert-link" asp-action="ForgetPassword" asp-route-id="Login">Reset your password</a>
     </div>
-</div>
+</form>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
