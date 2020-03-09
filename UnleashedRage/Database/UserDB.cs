@@ -53,6 +53,9 @@ namespace UnleashedRage.Database
             }
         }
 
+        /// <summary>
+        /// Grabs a list of all of the emails where SendEmails is true in the database
+        /// </summary>
         public static List<string> GetAllEmails(URContext context)
         {
             try
@@ -160,6 +163,44 @@ namespace UnleashedRage.Database
             catch
             {
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the email sent is already in the database
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public static bool EmailExists(URContext context, string email)
+        {
+            string emailExists = 
+                (from u in context.User
+                 where u.Email == email
+                 select u.Email).SingleOrDefault();
+            if(emailExists == email)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static bool UsernameExists(URContext context, string username)
+        {
+            string usernameExists = 
+                (from u in context.User
+                 where u.Username == username
+                 select u.Username).SingleOrDefault();
+            if (usernameExists == username)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
