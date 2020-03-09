@@ -32,5 +32,12 @@ namespace UnleashedRage.Models
         {
             SendEmail = false;
         }
+
+        public InputUser(User user)
+        {
+            Username = user.Username;
+            Email = user.Email;
+            SendEmail = user.SendEmail;
+        }
     }
 }
