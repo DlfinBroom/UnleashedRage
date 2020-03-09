@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using UnleashedRage.Models;
 
@@ -52,6 +53,9 @@ namespace UnleashedRage.Database
             }
         }
 
+        /// <summary>
+        /// Grabs a list of all of the emails where SendEmails is true in the database
+        /// </summary>
         public static List<string> GetAllEmails(URContext context)
         {
             try
@@ -75,9 +79,26 @@ namespace UnleashedRage.Database
         /// </returns>
         public static User AddUser(URContext context, User user)
         {
+            user.Password = HashPassword(user.Password);
             context.Add(user);
             context.SaveChanges();
             return user;
+        }
+
+        /// <summary>
+        /// Hashes the password before it is put into the database for security reasons
+        /// </summary>
+        private static string HashPassword(string password)
+        {
+            byte[] salt;
+            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
+            byte[] hash = pbkdf2.GetBytes(20);
+            byte[] hashBytes = new byte[36];
+            Array.Copy(salt, 0, hashBytes, 0, 16);
+            Array.Copy(hash, 0, hashBytes, 16, 20);
+            string savedPasswordHash = Convert.ToBase64String(hashBytes);
+            return savedPasswordHash;
         }
 
         /// <summary>
@@ -117,14 +138,69 @@ namespace UnleashedRage.Database
         {
             try
             {
-                string password = (from u in context.User
-                                   where u.Username == user.Username
-                                   select u.Password).Single();
-                return password == user.Password;
+                string originalPassword =
+                    (from u in context.User
+                     where u.Username == user.Username
+                     select u.Password).Single();
+
+                /* Fetch the stored value */
+                byte[] hashBytes = Convert.FromBase64String(originalPassword);
+                /* Get the salt */
+                byte[] salt = new byte[16];
+                Array.Copy(hashBytes, 0, salt, 0, 16);
+                /* Compute the hash on the password the user entered */
+                var pbkdf2 = new Rfc2898DeriveBytes(user.Password, salt, 10000);
+                byte[] hash = pbkdf2.GetBytes(20);
+
+                for (int i = 0; i < 20; i++) { 
+                    if (hashBytes[i + 16] != hash[i])
+                    {
+                        return false;
+                    }
+                }
+                return true;
             }
             catch
             {
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the email sent is already in the database
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public static bool EmailExists(URContext context, string email)
+        {
+            string emailExists = 
+                (from u in context.User
+                 where u.Email == email
+                 select u.Email).SingleOrDefault();
+            if(emailExists == email)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static bool UsernameExists(URContext context, string username)
+        {
+            string usernameExists = 
+                (from u in context.User
+                 where u.Username == username
+                 select u.Username).SingleOrDefault();
+            if (usernameExists == username)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 

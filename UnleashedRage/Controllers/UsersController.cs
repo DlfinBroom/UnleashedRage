@@ -57,7 +57,23 @@ namespace UnleashedRage.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (input.Password == input.CheckPassword)
+                input.Username = input.Username.ToLower();
+                input.Email = input.Email.ToLower();
+                if (input.Password != input.CheckPassword)
+                {
+                    ViewBag.Error = "Passwords must match";
+                }
+                else if (UserDB.UsernameExists(_context, input.Username))
+                {
+                    ViewBag.Error = "Username is already taken";
+                    input.Username = "";
+                }
+                else if (UserDB.EmailExists(_context, input.Email))
+                {
+                    ViewBag.Error = "Email is already taken";
+                    input.Email = "";
+                }
+                else
                 {
                     User user = new User(
                         input.Username,
@@ -70,7 +86,6 @@ namespace UnleashedRage.Controllers
                     ViewBag.Welcome = "Welcome " + user.Username;
                     return RedirectToAction("Index", "Home");
                 }
-                ViewBag.Error = "Passwords must match";
             }
             return View(input);
         }
