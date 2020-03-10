@@ -35,6 +35,7 @@ namespace UnleashedRage.Database
         {
             try
             {
+                username = username.ToLower();
                 return (from u in context.User
                         where u.Username == username
                         select new User
@@ -109,6 +110,7 @@ namespace UnleashedRage.Database
         /// </returns>
         public static User UpdateUser(URContext context, User user)
         {
+            user.Password = HashPassword(user.Password);
             context.Update(user);
             context.SaveChanges();
             return user;
