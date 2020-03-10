@@ -8,6 +8,21 @@ namespace UnleashedRage.Database
 {
     public class ComicPageDB
     {
+        public static ComicPage GetPage(URContext context, int id)
+        {
+            try
+            {
+                return (from c in context.ComicPage
+                        where c.PageID == id
+                        select new ComicPage()).Single();
+            }
+            catch
+            {
+                ComicPage noPageFound = new ComicPage();
+                return noPageFound;
+            }
+        }
+
         /// <summary>
         /// Adds the comic page given into the database
         /// </summary>
