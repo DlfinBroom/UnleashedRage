@@ -136,7 +136,7 @@ namespace UnleashedRage.Controllers
             }
             return View(user);
         }
-        
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -159,12 +159,49 @@ namespace UnleashedRage.Controllers
             string email = originalAccount.Email;
             if (!string.IsNullOrEmpty(email))
             {
-                // Send an email to change that users password
-                ViewBag.Success = "An email was sent to change the password of this account";
-                return RedirectToAction("Login", "Users");
+                /*
+                 * Instead of linking to the webpage, send an email 
+                 * with the link attached that expires in 10 minutes
+                 */
+                //// Send an email to change that users password
+                //ViewBag.Success = "An email was sent to change the password of this account";
+                //return RedirectToAction("Login", "Users");
+                int id = UserDB.GetUser(_context, account.Username).UserID;
+                return RedirectToAction("RecoverPassword", new { userID = id });
             }
             ViewBag.Error = "Username was not found, was it spelled right?";
             return View(account);
+        }
+
+        public IActionResult RecoverPassword(int userID)
+        {
+            InputUser input = new InputUser(UserDB.GetUser(_context, userID));
+            return View(input);
+        }
+        [HttpPost]
+        public IActionResult RecoverPassword(InputUser input)
+        {
+            if (ModelState.IsValid)
+            {
+                if(input.Password != input.CheckPassword)
+                {
+                    ViewBag.Error = "Passwords do not match";
+                }
+                else
+                {
+                    User user = UserDB.GetUser(_context, input.Username);
+                    user.Password = input.Password;
+                    if (UserDB.UpdateUser(_context, user) == user)
+                    {
+                        return RedirectToAction("Login");
+                    }
+                    else
+                    {
+                        ViewBag.Error = "An Error Occured, Try Again Later";
+                    }
+                }
+            }
+            return View(input);
         }
         private bool UserExists(int id)
         {
