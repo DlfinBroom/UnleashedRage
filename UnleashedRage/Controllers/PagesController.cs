@@ -157,20 +157,18 @@ namespace UnleashedRage.Database {
                 return NotFound();
             }
 
-            var comicPage = await _context.ComicPage
-                .FirstOrDefaultAsync(m => m.PageID == id);
-            if (comicPage == null) {
+            ComicPage page = ComicPageDB.GetPage(_context, id.GetValueOrDefault());
+            if (page == null) {
                 return NotFound();
             }
 
-            return View(comicPage);
+            return View(page);
         }
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id) {
-            var comicPage = await _context.ComicPage.FindAsync(id);
-            _context.ComicPage.Remove(comicPage);
-            await _context.SaveChangesAsync();
+            ComicPage page = ComicPageDB.GetPage(_context, id);
+            ComicPageDB.DeletePage(_context, page);
             return RedirectToAction(nameof(Index));
         }
         #endregion
