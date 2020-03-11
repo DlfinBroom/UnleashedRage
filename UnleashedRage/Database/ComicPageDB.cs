@@ -9,44 +9,77 @@ namespace UnleashedRage.Database
     public class ComicPageDB
     {
         /// <summary>
-        /// Adds the comic page given into the database
+        /// Returns a page without the image part
+        /// </summary>
+        public static ComicPage GetPage(URContext context, int id)
+        {
+            try
+            {
+                return (from c in context.ComicPage
+                        where c.PageID == id
+                        select new ComicPage
+                        {
+                            PageID = c.PageID,
+                            Volume = c.Volume,
+                            Issue = c.Issue,
+                            ReleaseDate = c.ReleaseDate,
+                        }).Single();
+            }
+            catch
+            {
+                ComicPage noPageFound = new ComicPage();
+                return noPageFound;
+            }
+        }
+
+        /// <summary>
+        /// Returns a page with all parts, including image
+        /// </summary>
+        public static ComicPage GetFullPage(URContext context, int id)
+        {
+            try
+            {
+                return (from c in context.ComicPage
+                        where c.PageID == id
+                        select new ComicPage
+                        {
+                            PageID = c.PageID,
+                            Volume = c.Volume,
+                            Issue = c.Issue,
+                            ReleaseDate = c.ReleaseDate,
+                            Image = c.Image
+                        }).Single();
+            }
+            catch
+            {
+                ComicPage noPageFound = new ComicPage();
+                return noPageFound;
+            }
+        }
+
+        /// <summary>
+        /// Adds the comic page given into the database or
+        /// Updates the page if the same page already existed
         /// </summary>
         /// <returns>
         /// Returns true if only one page was affected, returns false otherwise
         /// </returns>
-        public static bool? AddPage(URContext context, ComicPage page) {
-            if (!pageExists(context, page.Volume + " " + page.Issue))
+        public static bool AddPage(URContext context, ComicPage page) {
+            int pageID = IssueExists(context, page.Volume, page.Issue);
+            if (pageID != -1)
             {
-                context.Add(page);
-                if (context.SaveChanges() == 1)
-                    return true;
-                else
-                    return false;
+                page.PageID = pageID;
+                return UpdatePage(context, page);
             }
+            context.Add(page);
+            if (context.SaveChanges() == 1)
+                return true;
             else
-            {
-                return null;
-            }
+                return false;
         }
 
         /// <summary>
-        /// Returns if a page with the same volume and issue exists in the database
-        /// </summary>
-        private static bool pageExists(URContext context, string volumeIssue)
-        {
-            return false;
-            //List<String> things = (from c in context.ComicPage
-            //                       orderby c.Volume, c.Issue
-            //                       select c.Volume + " " + c.Issue).ToList<String>();
-            //if (things.Contains(volumeIssue))
-            //{
-            //    return true;
-            //}
-            //return false;
-        }
-
-        /// <summary>
-        /// Updates the user given if they are already in the database
+        /// Updates the page given if they are already in the database
         /// </summary>
         /// <returns>
         /// Returns true if only one user was affected, returns false otherwise
@@ -57,6 +90,20 @@ namespace UnleashedRage.Database
                 return true;
             else
                 return false;
+        }
+
+        /// <summary>
+        /// Checks if a page with the same volume and issue exists already
+        /// </summary>
+        /// <returns>
+        /// If the page already exists, returns its pageID, else it returns -1
+        /// </returns>
+        private static int IssueExists(URContext context, int volume, int issue)
+        {
+            int? pageID = (from c in context.ComicPage
+                           where c.Volume == volume && c.Issue == issue
+                           select c.PageID).First();
+            return pageID.GetValueOrDefault(-1);
         }
 
         /// <summary>
@@ -71,67 +118,6 @@ namespace UnleashedRage.Database
                 return true;
             else
                 return false;
-        }
-
-        public static ComicPage GetLatestPage(URContext context)
-        {
-            try
-            {
-                ComicPage page = (from c in context.ComicPage
-                                  orderby c.ReleaseDate
-                                  select c).Single();
-                return page;
-            }
-            catch
-            {
-                return null;
-            }
-            finally
-            {
-                context.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// Returns one comic page with the same volume and issue given
-        /// </summary>
-        /// <returns>
-        /// Returns the page if it is found, returns null otherwise
-        /// </returns>
-        public static ComicPage GetOnePage(URContext context, int pageID) {
-            try {
-                ComicPage page = (from c in context.ComicPage
-                                  where c.PageID == pageID
-                                  select c).Single();
-                return page;
-            }
-            catch {
-                return null;
-            }
-            finally {
-                context.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// Returns a list of all comic pages in the volume given
-        /// </summary>
-        /// <returns>
-        /// Returns the list if it is found, returns null otherwise
-        /// </returns>
-        public static List<ComicPage> GetOneVolume(URContext context, int Volume) {
-            try {
-                List<ComicPage> page = (from c in context.ComicPage
-                                        where c.Volume == Volume
-                                        select c).ToList<ComicPage>();
-                return page;
-            }
-            catch {
-                return null;
-            }
-            finally {
-                context.Dispose();
-            }
         }
 
         /// <summary>
