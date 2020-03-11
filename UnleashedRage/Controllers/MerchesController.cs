@@ -19,7 +19,8 @@ namespace UnleashedRage.Controllers {
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Merch.ToListAsync());
+            List<Merch> allMerch = MerchDB.GetAllMerch(_context);
+            return View(allMerch);
         }
 
         public async Task<IActionResult> Details(int? id) {
@@ -27,7 +28,12 @@ namespace UnleashedRage.Controllers {
                 return NotFound();
             }
 
-            Merch merch = MerchDB.GetOneMerch(_context, (int)id);
+            Merch merch = MerchDB.GetMerch(_context, id.GetValueOrDefault(-1));
+            if(merch == null)
+            {
+                return NotFound();
+            }
+
             ViewBag.Merch = merch;
             return View(merch);
         }
