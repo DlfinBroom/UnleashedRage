@@ -117,37 +117,24 @@ namespace UnleashedRage.Database {
             if (id == null) {
                 return NotFound();
             }
-
-            var comicPage = await _context.ComicPage.FindAsync(id);
-            if (comicPage == null) {
+            ComicPage page = ComicPageDB.GetFullPage(_context, id.GetValueOrDefault(-1));
+            if (page == null) {
                 return NotFound();
             }
-            return View(comicPage);
+            return View(page);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PageID,Volume,Issue,Image,ReleaseDate")] ComicPage comicPage)
+        public async Task<IActionResult> Edit(ComicPage page)
         {
-            if (id != comicPage.PageID) {
-                return NotFound();
-            }
-
             if (ModelState.IsValid) {
-                try {
-                    _context.Update(comicPage);
-                    await _context.SaveChangesAsync();
+                if (ComicPageDB.UpdatePage(_context, page))
+                {
+                    ViewBag.Error = "An Error has occured, try again later";
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException) {
-                    if (!ComicPageExists(comicPage.PageID)) {
-                        return NotFound();
-                    }
-                    else {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
             }
-            return View(comicPage);
+            return View(page);
         }
         #endregion
 
@@ -156,7 +143,7 @@ namespace UnleashedRage.Database {
             if (id == null) {
                 return NotFound();
             }
-            ComicPage page = ComicPageDB.GetPage(_context, id.GetValueOrDefault());
+            ComicPage page = ComicPageDB.GetPage(_context, id.GetValueOrDefault(-1));
             if (page == null) {
                 return NotFound();
             }
