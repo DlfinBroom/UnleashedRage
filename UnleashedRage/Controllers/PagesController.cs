@@ -41,7 +41,7 @@ namespace UnleashedRage.Database {
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Volume,Issue,Image")] InputComicPage input) {
+        public IActionResult Create(InputComicPage input) {
             if (ModelState.IsValid) {
                 ComicPage page = new ComicPage();
                 page.Issue = input.Issue;
@@ -66,18 +66,20 @@ namespace UnleashedRage.Database {
 
                 // Tries to add the page to the database, and displays a message if it worked or not
                 bool? pageAdded = ComicPageDB.AddPage(_context, page);
-                if (pageAdded == true)
-                    ViewBag.Message = page.ToString() + " was added!";
-                else if (pageAdded == null)
-                    ViewBag.Error = input.ToString() + " already exists, edit that page or make a new one";
-                else
+                if (pageAdded == false)
+                {
                     ViewBag.Error = "An error occured, try again later";
+                }
+                else if (pageAdded == null)
+                {
+                    ViewBag.Error = input.ToString() + " already exists, edit that page or make a new one";
+                }
 
+                ViewBag.Message = page.ToString() + " was added!";
                 if (input.SendEmail == true)
                 {
                     SendPageUpdateEmail(input);
                 }
-
                 return View();
             }
             ViewData["ErrorMessage"] = "An error occured, try again later";
