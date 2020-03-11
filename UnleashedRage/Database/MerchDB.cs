@@ -108,11 +108,10 @@ namespace UnleashedRage.Database
                                      select m).ToList<Merch>();
                 return merch;
             }
-            catch {
-                return null;
-            }
-            finally {
-                context.Dispose();
+            catch
+            {
+                List<Merch> noMerchFound = new List<Merch>();
+                return noMerchFound;
             }
         }
     }
