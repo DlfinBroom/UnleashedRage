@@ -8,13 +8,47 @@ namespace UnleashedRage.Database
 {
     public class ComicPageDB
     {
+        /// <summary>
+        /// Returns a page without the image part
+        /// </summary>
         public static ComicPage GetPage(URContext context, int id)
         {
             try
             {
                 return (from c in context.ComicPage
                         where c.PageID == id
-                        select new ComicPage()).Single();
+                        select new ComicPage
+                        {
+                            PageID = c.PageID,
+                            Volume = c.Volume,
+                            Issue = c.Issue,
+                            ReleaseDate = c.ReleaseDate,
+                        }).Single();
+            }
+            catch
+            {
+                ComicPage noPageFound = new ComicPage();
+                return noPageFound;
+            }
+        }
+
+        /// <summary>
+        /// Returns a page with all parts, including image
+        /// </summary>
+        public static ComicPage GetFullPage(URContext context, int id)
+        {
+            try
+            {
+                return (from c in context.ComicPage
+                        where c.PageID == id
+                        select new ComicPage
+                        {
+                            PageID = c.PageID,
+                            Volume = c.Volume,
+                            Issue = c.Issue,
+                            ReleaseDate = c.ReleaseDate,
+                            Image = c.Image
+                        }).Single();
             }
             catch
             {
