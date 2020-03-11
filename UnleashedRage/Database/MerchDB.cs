@@ -51,23 +51,48 @@ namespace UnleashedRage.Database
         }
 
         /// <summary>
-        /// Returns one comic page with the same volume and issue given
+        /// Returns a single merch item with all properties except for image
         /// </summary>
-        /// <returns>
-        /// Returns the page if it is found, returns null otherwise
-        /// </returns>
-        public static Merch GetOneMerch(URContext context, int merchID) {
+        public static Merch GetMerch(URContext context, int merchID) {
             try {
                 Merch merch = (from m in context.Merch
-                                  where m.MerchID == merchID
-                                  select m).Single();
+                               where m.MerchID == merchID
+                               select new Merch
+                               {
+                                   MerchID = m.MerchID,
+                                   Name = m.Name,
+                                   Price = m.Price,
+                               }).Single();
                 return merch;
             }
             catch {
-                return null;
+                Merch noMerchFound = new Merch();
+                return noMerchFound;
             }
-            finally {
-                context.Dispose();
+        }
+
+        /// <summary>
+        /// Returns a single merch item with all properties, including image
+        /// </summary>
+        public static Merch GetFullMerch(URContext context, int merchID)
+        {
+            try
+            {
+                Merch merch = (from m in context.Merch
+                               where m.MerchID == merchID
+                               select new Merch
+                               {
+                                   MerchID = m.MerchID,
+                                   Name = m.Name,
+                                   Price = m.Price,
+                                   MerchImage = m.MerchImage
+                               }).Single();
+                return merch;
+            }
+            catch
+            {
+                Merch noMerchFound = new Merch();
+                return noMerchFound;
             }
         }
 
