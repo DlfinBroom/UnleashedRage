@@ -97,11 +97,8 @@ namespace UnleashedRage.Database
         }
 
         /// <summary>
-        /// Returns all comic pages in the database
+        /// Returns a list of all merch in the database with all properties
         /// </summary>
-        /// <returns>
-        /// returns the list of all pages if found, returns null otherwise
-        /// </returns>
         public static List<Merch> GetAllMerch(URContext context) {
             try {
                 List<Merch> merch = (from m in context.Merch
