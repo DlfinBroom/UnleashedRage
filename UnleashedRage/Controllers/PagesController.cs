@@ -28,7 +28,7 @@ namespace UnleashedRage.Database {
                 return NotFound();
             }
 
-            ComicPage comicPage = ComicPageDB.GetOnePage(_context, (int)id);
+            ComicPage comicPage = ComicPageDB.GetPage(_context, id.GetValueOrDefault(-1));
             ViewBag.ComicPage = comicPage;
             return View(comicPage);
         }
