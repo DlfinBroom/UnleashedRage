@@ -122,67 +122,6 @@ namespace UnleashedRage.Database
                 return false;
         }
 
-        public static ComicPage GetLatestPage(URContext context)
-        {
-            try
-            {
-                ComicPage page = (from c in context.ComicPage
-                                  orderby c.ReleaseDate
-                                  select c).Single();
-                return page;
-            }
-            catch
-            {
-                return null;
-            }
-            finally
-            {
-                context.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// Returns one comic page with the same volume and issue given
-        /// </summary>
-        /// <returns>
-        /// Returns the page if it is found, returns null otherwise
-        /// </returns>
-        public static ComicPage GetOnePage(URContext context, int pageID) {
-            try {
-                ComicPage page = (from c in context.ComicPage
-                                  where c.PageID == pageID
-                                  select c).Single();
-                return page;
-            }
-            catch {
-                return null;
-            }
-            finally {
-                context.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// Returns a list of all comic pages in the volume given
-        /// </summary>
-        /// <returns>
-        /// Returns the list if it is found, returns null otherwise
-        /// </returns>
-        public static List<ComicPage> GetOneVolume(URContext context, int Volume) {
-            try {
-                List<ComicPage> page = (from c in context.ComicPage
-                                        where c.Volume == Volume
-                                        select c).ToList<ComicPage>();
-                return page;
-            }
-            catch {
-                return null;
-            }
-            finally {
-                context.Dispose();
-            }
-        }
-
         /// <summary>
         /// Returns all comic pages in the database
         /// </summary>
