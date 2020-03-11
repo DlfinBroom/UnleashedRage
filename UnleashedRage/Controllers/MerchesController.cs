@@ -46,7 +46,7 @@ namespace UnleashedRage.Controllers {
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Name,Price,MerchImage")] InputMerch input) {
+        public IActionResult Create(InputMerch input) {
             if (ModelState.IsValid) {
                 Merch merch = new Merch();
                 merch.Name = input.Name;
@@ -64,7 +64,7 @@ namespace UnleashedRage.Controllers {
                 byte[] imageByteArray = ms.ToArray();
 
                 merch.MerchImage = imageByteArray;
-                if (MerchDB.AddMerch(_context, merch) == true)
+                if (MerchDB.AddMerch(_context, merch))
                     ViewBag.Message = merch.ToString() + " was added!";
                 else
                     ViewBag.ErrorMessage = "An error occured, try again later";
