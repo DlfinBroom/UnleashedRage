@@ -156,7 +156,6 @@ namespace UnleashedRage.Database {
             if (id == null) {
                 return NotFound();
             }
-
             ComicPage page = ComicPageDB.GetPage(_context, id.GetValueOrDefault());
             if (page == null) {
                 return NotFound();
