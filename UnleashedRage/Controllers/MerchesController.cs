@@ -83,7 +83,7 @@ namespace UnleashedRage.Controllers {
                 return NotFound();
             }
 
-            var merch = await _context.Merch.FindAsync(id);
+            Merch merch = MerchDB.GetFullMerch(_context, id.GetValueOrDefault(-1));
             if (merch == null) {
                 return NotFound();
             }
@@ -91,24 +91,9 @@ namespace UnleashedRage.Controllers {
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MerchID,Price,MerchImage")] Merch merch) {
-            if (id != merch.MerchID) {
-                return NotFound();
-            }
-
+        public async Task<IActionResult> Edit(Merch merch) {
             if (ModelState.IsValid) {
-                try {
-                    _context.Update(merch);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException) {
-                    if (!MerchExists(merch.MerchID)) {
-                        return NotFound();
-                    }
-                    else {
-                        throw;
-                    }
-                }
+                MerchDB.UpdateMerch(_context, merch);
                 return RedirectToAction(nameof(Index));
             }
             return View(merch);
