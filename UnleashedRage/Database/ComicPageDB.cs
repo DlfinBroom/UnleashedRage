@@ -100,10 +100,17 @@ namespace UnleashedRage.Database
         /// </returns>
         private static int IssueExists(URContext context, int volume, int issue)
         {
-            int? pageID = (from c in context.ComicPage
-                           where c.Volume == volume && c.Issue == issue
-                           select c.PageID).First();
-            return pageID.GetValueOrDefault(-1);
+            try
+            {
+                int? pageID = (from c in context.ComicPage
+                               where c.Volume == volume && c.Issue == issue
+                               select c.PageID).First();
+                return pageID.GetValueOrDefault(-1);
+            }
+            catch(InvalidOperationException ioe)
+            {
+                return -1;
+            }
         }
 
         /// <summary>
